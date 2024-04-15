@@ -4,7 +4,7 @@ import dotenv
 from abc import ABC, abstractmethod
 import psycopg2
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 dotenv.load_dotenv(BASE_DIR / ".env")
 
 class Database(ABC):
