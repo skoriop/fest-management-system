@@ -1,4 +1,14 @@
 services:
+  backend:
+    build: ./backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/api/app
+    depends_on:
+      - db
   frontend:
     build: ./frontend
     env_file:
@@ -8,6 +18,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    depends_on:
+      - backend
   db:
     image: postgres:latest
     restart: always
