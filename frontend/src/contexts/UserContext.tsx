@@ -50,6 +50,14 @@ const UserContext = createContext({
 		phoneNumber: number,
 		affiliation: string,
 	) => {},
+	updateUserCallback: (
+		name: string,
+		email: string,
+		phoneNumber: number,
+		affiliation: string,
+		id: string,
+	) => {},
+	deleteUserCallback: (id: string) => {},
 });
 
 function reducer(state: userType, action: userAction) {
@@ -100,15 +108,30 @@ const UserProvider = ({ children }) => {
 		const affiliation = fromBits ? "" : aff;
 	};
 
+	const deleteUser = (id: string) => {};
+	const updateUser = (
+		name: string,
+		email: string,
+		phoneNumber: number,
+		aff: string,
+		id: string,
+	) => {
+		const fromBits = email.split("@")[1] === "hyderabad.bits-pilani.ac.in";
+		const bitsId = fromBits ? email.split("@")[0] : "";
+		const affiliation = fromBits ? "" : aff;
+	};
 	const getUserByIdCallback = useCallback(getUserById, []);
 	const createUserCallback = useCallback(createUser, []);
-
+	const deleteUserCallback = useCallback(deleteUser, []);
+	const updateUserCallback = useCallback(updateUser, []);
 	return (
 		<UserContext.Provider
 			value={{
 				user,
 				getUserByIdCallback,
 				createUserCallback,
+				deleteUserCallback,
+				updateUserCallback,
 			}}
 		>
 			{children}

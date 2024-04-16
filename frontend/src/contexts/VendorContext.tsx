@@ -28,7 +28,7 @@ const VendorContext = createContext({
 	getVendorByIdCallback: async (id: string) => {},
 	getAllVendorsCallback: () => [],
 	createVendorCallback: (name: string, description: string) => {},
-	updateVendorCallback: (name: string, description: string) => {},
+	updateVendorCallback: (name: string, description: string, id: string) => {},
 	deleteVendorCallback: (id: string) => {},
 });
 
@@ -106,8 +106,8 @@ const VendorProvider = ({ children }) => {
 		return data;
 	};
 
-	const createVendor = (body: vendorType) => {};
-	const updateVendor = (name: string, description: string) => {};
+	const createVendor = (name: string, description: string) => {};
+	const updateVendor = (name: string, description: string, id: string) => {};
 	const deleteVendor = (id: string) => {};
 
 	const getVendorByIdCallback = useCallback(getVendorById, []);

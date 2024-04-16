@@ -37,7 +37,7 @@ function User() {
 					<p>{user.spent}</p>
 				</h3>
 				<Link
-					to={`/vendor/${id}/update`}
+					to={`/user/${id}/update`}
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 				>
 					Update
