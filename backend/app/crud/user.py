@@ -12,3 +12,13 @@ def create_user(user: User):
         user_id = db.execute(query, vars(user))
         db.connection.commit()
         return user_id
+    
+# Gets a user by their ID
+def get_user_by_id(user_id: int):
+    query = """
+        SELECT * FROM users WHERE id = :user_id
+    """
+    with PgDatabase() as db:
+        user = db.query_one(query, {'user_id': user_id})
+        db.connection.commit()
+        return user
