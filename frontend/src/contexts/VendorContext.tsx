@@ -32,6 +32,7 @@ const VendorContext = createContext({
 	nameCallback: (name: string) => {},
 	descriptionCallback: (description: string) => {},
 	deleteVendorCallback: (id: string) => {},
+	resetCallback: () => {},
 });
 
 const reducer = (state: vendorType, action: vendorAction) => {
@@ -53,6 +54,9 @@ const reducer = (state: vendorType, action: vendorAction) => {
 				...state,
 				description: action.payload.name,
 			};
+		}
+		case "vendor/initial": {
+			return initialState;
 		}
 		default:
 			return state;
@@ -109,10 +113,14 @@ const VendorProvider = ({ children }) => {
 	const updateVendor = (body: vendorType) => {};
 	const deleteVendor = (id: string) => {};
 	const name = (name: string) => {
-		dispatch({ type: "/vendor/name", payload: { name } });
+		dispatch({ type: "vendor/name", payload: { name } });
 	};
 	const description = (description: string) => {
-		dispatch({ type: "/vendor/description", payload: { description } });
+		dispatch({ type: "vendor/description", payload: { description } });
+	};
+
+	const reset = () => {
+		dispatch({ type: "vendor/initial", payload: {} });
 	};
 
 	const getVendorByIdCallback = useCallback(getVendorById, []);
@@ -122,6 +130,8 @@ const VendorProvider = ({ children }) => {
 	const nameCallback = useCallback(name, []);
 	const descriptionCallback = useCallback(description, []);
 	const deleteVendorCallback = useCallback(deleteVendor, []);
+	const resetCallback = useCallback(reset, []);
+
 	return (
 		<VendorContext.Provider
 			value={{
@@ -133,6 +143,7 @@ const VendorProvider = ({ children }) => {
 				nameCallback,
 				descriptionCallback,
 				deleteVendorCallback,
+				resetCallback,
 			}}
 		>
 			{children}

@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import { useVendor } from "@/contexts/VendorContext";
 
 function VendorCreate() {
-	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
+	const { vendor, nameCallback, descriptionCallback, resetCallback } =
+		useVendor();
+	useEffect(() => {
+		resetCallback();
+	}, [resetCallback]);
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12">
 			<Navbar />
@@ -15,19 +19,22 @@ function VendorCreate() {
 					<input
 						type="text"
 						className="text-black text-center p-1 border-2 border-slate-600"
-						value={name}
-						onChange={(e) => setName(e.target.value)}
+						value={vendor.name}
+						onChange={(e) => nameCallback(e.target.value)}
 					/>
 				</div>
 				<div className="flex justify-between space-x-4 pb-4">
 					<div className="text-2xl">Description</div>
 					<textarea
 						className="text-black text-center p-1 border-2 border-slate-600"
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
+						value={vendor.description}
+						onChange={(e) => descriptionCallback(e.target.value)}
 					/>
 				</div>
-				<button className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto" onClick={()=>{}}>
+				<button
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+					onClick={() => {}}
+				>
 					Create
 				</button>
 			</div>
