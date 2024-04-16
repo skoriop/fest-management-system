@@ -19,3 +19,20 @@ async def create_user(user: User):
             'message': 'An error occurred: ' + str(e),
             'data': None
         }
+    
+# Get User by ID route
+@app.get('/user/{user_id}/')
+async def get_user(user_id: int):
+    try:
+        user = get_user_by_id(user_id)
+        return {
+            'error': False,
+            'message': None,
+            'data': user
+        }
+    except Exception as e:
+        return {
+            'error': True,
+            'message': 'An error occurred: ' + str(e),
+            'data': None
+        }
