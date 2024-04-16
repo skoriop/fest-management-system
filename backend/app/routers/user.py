@@ -53,3 +53,20 @@ async def update_user(user_id: int, user: User):
             'message': 'An error occurred: ' + str(e),
             'data': None
         }
+    
+# Delete User route
+@app.delete('/user/{user_id}/delete')
+async def delete_user(user_id: int):
+    try:
+        user_crud.delete_user(user_id)
+        return {
+            'error': False,
+            'message': 'User deleted successfully',
+            'data': None
+        }
+    except Exception as e:
+        return {
+            'error': True,
+            'message': 'An error occurred: ' + str(e),
+            'data': None
+        }
