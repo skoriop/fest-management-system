@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { useVendor } from "@/contexts/VendorContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function VendorUpdate() {
@@ -9,12 +9,15 @@ function VendorUpdate() {
 		vendor,
 		getVendorByIdCallback,
 		updateVendorCallback,
-		nameCallback,
-		descriptionCallback,
+		deleteVendorCallback,
 	} = useVendor();
+	const [name, setName] = useState("");
+	const [description, setDescription] = useState("");
 	useEffect(() => {
 		getVendorByIdCallback(params.id);
-	}, [getVendorByIdCallback, params.id]);
+		setName(vendor.name);
+		setDescription(vendor.description);
+	}, [getVendorByIdCallback, params.id, vendor.description, vendor.name]);
 
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12">
@@ -26,22 +29,22 @@ function VendorUpdate() {
 					<input
 						type="text"
 						className="text-black text-center p-1 border-2 border-slate-600"
-						value={vendor.name}
-						onChange={(e) => nameCallback(e.target.value)}
+						value={name}
+						onChange={(e) => setName(e.target.value)}
 					/>
 				</div>
 				<div className="flex justify-between space-x-4 pb-4">
 					<div className="text-2xl">Description</div>
 					<textarea
 						className="text-black text-center p-1 border-2 border-slate-600"
-						value={vendor.description}
-						onChange={(e) => descriptionCallback(e.target.value)}
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
 					/>
 				</div>
 				<button
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 					onClick={() => {
-						updateVendorCallback();
+						updateVendorCallback(name, description);
 					}}
 					type="submit"
 				>
@@ -51,7 +54,7 @@ function VendorUpdate() {
 				<button
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 					onClick={() => {
-						updateVendorCallback();
+						deleteVendorCallback(params.id);
 					}}
 					type="submit"
 				>

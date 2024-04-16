@@ -28,7 +28,7 @@ const VendorContext = createContext({
 	getVendorByIdCallback: async (id: string) => {},
 	getAllVendorsCallback: () => [],
 	createVendorCallback: (name: string, description: string) => {},
-	updateVendorCallback: (body: vendorType) => {},
+	updateVendorCallback: (name: string, description: string) => {},
 	deleteVendorCallback: (id: string) => {},
 });
 
