@@ -27,12 +27,9 @@ const VendorContext = createContext({
 	vendor: initialState,
 	getVendorByIdCallback: async (id: string) => {},
 	getAllVendorsCallback: () => [],
-	createVendorCallback: (body: vendorType) => {},
+	createVendorCallback: (name: string, description: string) => {},
 	updateVendorCallback: (body: vendorType) => {},
-	nameCallback: (name: string) => {},
-	descriptionCallback: (description: string) => {},
 	deleteVendorCallback: (id: string) => {},
-	resetCallback: () => {},
 });
 
 const reducer = (state: vendorType, action: vendorAction) => {
@@ -110,27 +107,14 @@ const VendorProvider = ({ children }) => {
 	};
 
 	const createVendor = (body: vendorType) => {};
-	const updateVendor = (body: vendorType) => {};
+	const updateVendor = (name: string, description: string) => {};
 	const deleteVendor = (id: string) => {};
-	const name = (name: string) => {
-		dispatch({ type: "vendor/name", payload: { name } });
-	};
-	const description = (description: string) => {
-		dispatch({ type: "vendor/description", payload: { description } });
-	};
-
-	const reset = () => {
-		dispatch({ type: "vendor/initial", payload: {} });
-	};
 
 	const getVendorByIdCallback = useCallback(getVendorById, []);
 	const getAllVendorsCallback = useCallback(getAllVendors, []);
 	const createVendorCallback = useCallback(createVendor, []);
 	const updateVendorCallback = useCallback(updateVendor, []);
-	const nameCallback = useCallback(name, []);
-	const descriptionCallback = useCallback(description, []);
 	const deleteVendorCallback = useCallback(deleteVendor, []);
-	const resetCallback = useCallback(reset, []);
 
 	return (
 		<VendorContext.Provider
@@ -140,10 +124,7 @@ const VendorProvider = ({ children }) => {
 				getAllVendorsCallback,
 				createVendorCallback,
 				updateVendorCallback,
-				nameCallback,
-				descriptionCallback,
 				deleteVendorCallback,
-				resetCallback,
 			}}
 		>
 			{children}
