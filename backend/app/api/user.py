@@ -4,8 +4,8 @@ from app.models.user import User
 # Creates a new user
 def create_user(user: User):
     query = """
-        INSERT INTO users (name, phonenumber, email, from_bits, bits_id, affiliation, spent)
-        VALUES (:name, :phonenumber, :email, :from_bits, :bits_id, :affiliation, :spent)
+        INSERT INTO users (name, phone_number, email, from_bits, bits_id, affiliation, spent)
+        VALUES (:name, :phone_number, :email, :from_bits, :bits_id, :affiliation, :spent)
         RETURNING id
     """
     with PgDatabase() as db:
@@ -27,7 +27,7 @@ def get_user_by_id(user_id: int):
 def update_user(user_id: int, user: User):
     query = """
         UPDATE users
-        SET name = :name, phonenumber = :phonenumber, email = :email, from_bits = :from_bits, bits_id = :bits_id, affiliation = :affiliation, spent = :spent
+        SET name = :name, phone_number = :phone_number, email = :email, from_bits = :from_bits, bits_id = :bits_id, affiliation = :affiliation, spent = :spent
         WHERE id = :user_id
     """
     with PgDatabase() as db:
