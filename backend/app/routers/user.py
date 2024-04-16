@@ -1,10 +1,11 @@
-import app
+from fastapi import APIRouter
 import app.api.user as user_api
 from app.models.user import User
 
-# Create User route
-@app.post('/user/create')
-async def create_user(user: User):
+router = APIRouter()
+
+@router.post('/create')
+async def create(user: User):
     try:
         user_id = user_api.create_user(user)
         created_user = user_api.get_user_by_id(user_id)
@@ -20,9 +21,8 @@ async def create_user(user: User):
             'data': None
         }
     
-# Get User by ID route
-@app.get('/user/{user_id}/')
-async def get_user(user_id: int):
+@router.get('/{user_id}')
+async def get(user_id: int):
     try:
         user = user_api.get_user_by_id(user_id)
         return {
@@ -37,9 +37,8 @@ async def get_user(user_id: int):
             'data': None
         }
 
-# Update User route
-@app.put('/user/{user_id}/update')
-async def update_user(user_id: int, user: User):
+@router.post('/{user_id}/update')
+async def update(user_id: int, user: User):
     try:
         updated_user = user_api.update_user(user_id, user)
         return {
@@ -54,8 +53,7 @@ async def update_user(user_id: int, user: User):
             'data': None
         }
     
-# Delete User route
-@app.delete('/user/{user_id}/delete')
+@router.post('/{user_id}/delete')
 async def delete_user(user_id: int):
     try:
         user_api.delete_user(user_id)
