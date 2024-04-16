@@ -5,21 +5,22 @@ from app.models.user import User
 def create_user(user: User):
     query = """
         INSERT INTO users (name, phone_number, email, from_bits, bits_id, affiliation, spent)
-        VALUES (:name, :phone_number, :email, :from_bits, :bits_id, :affiliation, :spent)
+        VALUES (%(name)s, %(phone_number)s, %(email)s, %(from_bits)s, %(bits_id)s, %(affiliation)s, %(spent)s)
         RETURNING id
     """
     with PgDatabase() as db:
-        user_id = db.execute(query, vars(user))
+        user_id = db.cursor.execute(query, vars(user))
         db.connection.commit()
         return user_id
     
 # Gets a user by their ID
 def get_user_by_id(user_id: int):
     query = """
-        SELECT * FROM users WHERE id = :user_id
+        SELECT * FROM users WHERE id = %(user_id)s
     """
     with PgDatabase() as db:
-        user = db.query_one(query, {'user_id': user_id})
+        db.cursor.execute(query, {'user_id': user_id})
+        user = db.cursor.fetchone()
         db.connection.commit()
         return user
 
@@ -27,20 +28,20 @@ def get_user_by_id(user_id: int):
 def update_user(user_id: int, user: User):
     query = """
         UPDATE users
-        SET name = :name, phone_number = :phone_number, email = :email, from_bits = :from_bits, bits_id = :bits_id, affiliation = :affiliation, spent = :spent
-        WHERE id = :user_id
+        SET name = %(name)s, phone_number = %(phone_number)s, email = %(email)s, from_bits = %(from_bits)s, bits_id = %(bits_id)s, affiliation = %(affiliation)s, spent = %(spent)s
+        WHERE id = %(user_id)s
     """
     with PgDatabase() as db:
-        db.execute(query, {'user_id': user_id, **vars(user)})
+        db.cursor.execute(query, {'user_id': user_id, **vars(user)})
         db.connection.commit()
         return user
 
 # Delete a user
 def delete_user(user_id: int):
     query = """
-        DELETE FROM users WHERE id = :user_id
+        DELETE FROM users WHERE id = %(user_id)s
     """
     with PgDatabase() as db:
-        db.execute(query, {'user_id': user_id})
+        db.cursor.execute(query, {'user_id': user_id})
         db.connection.commit()
         return True
