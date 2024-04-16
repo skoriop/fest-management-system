@@ -34,3 +34,13 @@ def update_user(user_id: int, user: User):
         db.execute(query, {'user_id': user_id, **vars(user)})
         db.connection.commit()
         return user
+
+# Delete a user
+def delete_user(user_id: int):
+    query = """
+        DELETE FROM users WHERE id = :user_id
+    """
+    with PgDatabase() as db:
+        db.execute(query, {'user_id': user_id})
+        db.connection.commit()
+        return True
