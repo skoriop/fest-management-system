@@ -3,6 +3,7 @@ from pathlib import Path
 import dotenv
 from abc import ABC, abstractmethod
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 dotenv.load_dotenv(BASE_DIR / ".env")
@@ -21,7 +22,7 @@ class Database(ABC):
 
     def __enter__(self):
         self.connection = self.connect_to_database()
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
         return self
 
     def __exit__(self, exception_type, exc_val, traceback):
