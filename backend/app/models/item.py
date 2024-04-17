@@ -4,8 +4,8 @@ from typing import Optional
 class Item(BaseModel):
     id: Optional[int] = None
     name: str
-    description: int
-    price: str
+    description: str
+    price: int
     non_veg: bool
     stock: int
-    vendor_id: int
+    vendor_id: Optional[int] = None
