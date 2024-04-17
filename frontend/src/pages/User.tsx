@@ -22,9 +22,9 @@ function User() {
 				</h3>
 				<h3 className="flex space-x-4 text-center text-xl mx-16">
 					<p className="font-bold">PhoneNumber: </p>
-					<p>{user.phoneNumber}</p>
+					<p>{user.phone_number}</p>
 				</h3>
-				{user.fromBits ? (
+				{user.from_bits ? (
 					""
 				) : (
 					<h3 className="flex space-x-4 text-center text-xl mx-16">

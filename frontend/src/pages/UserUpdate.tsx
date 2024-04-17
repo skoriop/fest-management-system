@@ -15,7 +15,7 @@ function UserUpdate() {
 		getUserByIdCallback(params.id);
 		setName(user.name);
 		setEmail(user.email);
-		setPhoneNumber(user.phoneNumber);
+		setPhoneNumber(user.phone_number);
 		setAffiliation(user.affiliation);
 	}, [
 		getUserByIdCallback,
@@ -23,7 +23,7 @@ function UserUpdate() {
 		user.affiliation,
 		user.email,
 		user.name,
-		user.phoneNumber,
+		user.phone_number,
 	]);
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12">
@@ -72,7 +72,7 @@ function UserUpdate() {
 				)}
 				<div className="flex">
 					<button
-						className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+						className="font-bold py-3 px-6 flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 						onClick={() => {
 							updateUserCallback(
 								name,
@@ -88,7 +88,7 @@ function UserUpdate() {
 					</button>
 
 					<button
-						className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+						className="font-bold py-3 px-6 flex gap-2 items-center text-2xl text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 						onClick={() => {
 							deleteUserCallback(params.id);
 						}}
