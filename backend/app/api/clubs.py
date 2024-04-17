@@ -24,6 +24,16 @@ def get_club_by_id(club_id: int):
         club_record = db.cursor.fetchone()
         return club_record
 
+# Get all members of a club
+def get_club_members(club_id: int):
+    query = """
+        SELECT * FROM users JOIN club_members WHERE users.id = club_members.user_id AND club_members.club_id = %(club_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'club_id': club_id})
+        club_members = db.cursor.fetchall()
+        return club_members
+
 # Delete a club by its id
 def delete_club_by_id(club_id: int):
     query = """
@@ -39,11 +49,11 @@ def update_club_by_id(club_id: int, club: Club):
     query = """
         UPDATE clubs
         SET name = %(name)s, description = %(description)s, members = %(members)s
-        WHERE id = %(id)s
+        WHERE id = %(club_id)s
         RETURNING *
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, vars(club))
+        db.cursor.execute(query, {'club_id': club_id, **vars(club)})
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record
