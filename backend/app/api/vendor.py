@@ -54,3 +54,11 @@ def get_all_vendors():
         vendors = db.cursor.fetchall()
         return vendors
 
+def get_vendor_sales(vendor_id: int):
+    query = """
+    SELECT get_vendor_sales_summary(%(vendor_id)s)
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'vendor_id': vendor_id})
+        sales = db.cursor.fetchall()
+        return sales
