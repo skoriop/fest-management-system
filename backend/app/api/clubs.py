@@ -23,3 +23,13 @@ def get_club_by_id(club_id: int):
         db.cursor.execute(query, {'id': club_id})
         club_record = db.cursor.fetchone()
         return club_record
+
+# Delete a club by its id
+def delete_club_by_id(club_id: int):
+    query = """
+        DELETE FROM clubs WHERE id = %(id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'id': club_id})
+        db.connection.commit()
+        return True
