@@ -30,6 +30,17 @@ async def get_club(club_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
     
+@router.get("/{club_id}/members")
+async def get_club_members(club_id: int):
+    try:
+        members = clubs_api.get_club_members(club_id)
+        return {
+            'message': None,
+            'data': members
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
 @router.post("/{club_id}/update")
 async def update_club(club_id: int, club: Club):
     try:

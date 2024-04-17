@@ -27,7 +27,7 @@ def get_club_by_id(club_id: int):
 # Get all members of a club
 def get_club_members(club_id: int):
     query = """
-        SELECT * FROM users JOIN club_members WHERE users.id = club_members.user_id AND club_members.club_id = %(club_id)s
+        SELECT * FROM users JOIN club_members ON users.id = club_members.user_id WHERE club_members.club_id = %(club_id)s
     """
     with PgDatabase() as db:
         db.cursor.execute(query, {'club_id': club_id})
