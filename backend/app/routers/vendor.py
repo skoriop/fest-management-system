@@ -66,3 +66,18 @@ async def get():
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
+
+@router.get('/{vendor_id}/sales')
+async def get_vendor_sales(vendor_id: int):
+    try:
+        sales = vendor_api.get_vendor_sales(vendor_id)
+        if not sales:
+            raise HTTPException(status_code=404, detail='Vendor not found')
+        return {
+            'message': 'Success',
+            'data': sales
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
