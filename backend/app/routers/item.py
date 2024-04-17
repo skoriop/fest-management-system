@@ -55,3 +55,13 @@ async def delete_item(vendor_id: int,item_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
 
+@router.get('/{vendor_id}/orders')
+async def get_vendor_orders_by_id(vendor_id: int):
+    try:
+        orders = item_api.get_vendor_orders_by_id(vendor_id)
+        return {
+            'message': 'Success',
+            'data': orders
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
