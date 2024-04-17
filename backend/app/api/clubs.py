@@ -13,3 +13,13 @@ def create_club(club: Club):
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record
+    
+# Get a club by its id
+def get_club_by_id(club_id: int):
+    query = """
+        SELECT * FROM clubs WHERE id = %(id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'id': club_id})
+        club_record = db.cursor.fetchone()
+        return club_record
