@@ -1,9 +1,6 @@
-import React, {
-	createContext,
-	useCallback,
-	useContext,
-	useReducer,
-} from "react";
+import axios from "axios";
+import { createContext, useCallback, useContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface vendorType {
 	name: string;
@@ -23,14 +20,7 @@ const initialState = {
 	description: "",
 };
 
-const VendorContext = createContext({
-	vendor: initialState,
-	getVendorByIdCallback: async (id: string) => {},
-	getAllVendorsCallback: () => [],
-	createVendorCallback: (name: string, description: string) => {},
-	updateVendorCallback: (name: string, description: string, id: string) => {},
-	deleteVendorCallback: (id: string) => {},
-});
+const VendorContext = createContext<any>({});
 
 const reducer = (state: vendorType, action: vendorAction) => {
 	switch (action.type) {
@@ -40,21 +30,6 @@ const reducer = (state: vendorType, action: vendorAction) => {
 				name: action.payload.name,
 				description: action.payload.description,
 			};
-		case "vendor/name": {
-			return {
-				...state,
-				name: action.payload.name,
-			};
-		}
-		case "vendor/description": {
-			return {
-				...state,
-				description: action.payload.name,
-			};
-		}
-		case "vendor/initial": {
-			return initialState;
-		}
 		default:
 			return state;
 	}
@@ -62,53 +37,87 @@ const reducer = (state: vendorType, action: vendorAction) => {
 
 const VendorProvider = ({ children }) => {
 	const [vendor, dispatch] = useReducer(reducer, initialState);
-
+	const navigate = useNavigate();
 	const getVendorById = async (id: string) => {
-		const data = {
-			name: "Vendor1",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-		};
-		dispatch({
-			type: "vendor/get",
-			payload: data,
-		});
+		try {
+			const res = await axios({
+				method: "get",
+				url: `http://localhost:8000/vendor/${id}`,
+			});
+			if (res.statusText === "OK") {
+				dispatch({
+					type: "vendor/get",
+					payload: res.data.data,
+				});
+			}
+		} catch (err) {
+			console.log("Error while querying for vendor:", err.message);
+		}
 	};
 
-	const getAllVendors = () => {
-		const data = [
-			{
-				id: "1234",
-				name: "Vendor1",
-				description:
-					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-			},
-			{
-				id: "1111",
-				name: "Vendor2",
-				description:
-					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-			},
-			{
-				id: "1115",
-				name: "Vendor3",
-				description:
-					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-			},
-			{
-				id: "1116",
-				name: "Vendor4",
-				description:
-					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-			},
-		];
-
-		return data;
+	const getAllVendors = async () => {
+		try {
+			const res = await axios({
+				method: "get",
+				url: "http://localhost:8000/vendor",
+			});
+			if (res.data.data.length === 0) return [];
+			return res.data.data;
+		} catch (err) {
+			console.log("Error while querying for vendor:", err.message);
+			return [];
+		}
 	};
 
-	const createVendor = (name: string, description: string) => {};
-	const updateVendor = (name: string, description: string, id: string) => {};
-	const deleteVendor = (id: string) => {};
+	const createVendor = async (name: string, description: string) => {
+		try {
+			const res = await axios({
+				method: "post",
+				url: "http://localhost:8000/vendor/create",
+				data: {
+					name,
+					description,
+				},
+			});
+			if (res.statusText === "OK") {
+				navigate(`/vendor/${res.data.data.id}`);
+			}
+		} catch (err) {
+			console.log("Error while querying for vendor:", err.message);
+		}
+	};
+	const updateVendor = async (
+		name: string,
+		description: string,
+		id: string,
+	) => {
+		try {
+			const res = await axios({
+				method: "post",
+				url: `http://localhost:8000/vendor/${id}/update`,
+				data: { name, description },
+			});
+
+			if (res.statusText === "OK") {
+				navigate(`/vendor/${id}`);
+			}
+		} catch (err) {
+			console.log("Error while querying for vendor:", err.message);
+		}
+	};
+	const deleteVendor = async (id: string) => {
+		try {
+			const res = await axios({
+				method: "post",
+				url: `http://localhost:8000/vendor/${id}/delete`,
+			});
+			if (res.statusText === "OK") {
+				navigate("/vendor");
+			}
+		} catch (err) {
+			console.log("Error while querying for vendor:", err.message);
+		}
+	};
 
 	const getVendorByIdCallback = useCallback(getVendorById, []);
 	const getAllVendorsCallback = useCallback(getAllVendors, []);
@@ -137,4 +146,4 @@ const useVendor = () => {
 	return context;
 };
 
-export { VendorProvider, VendorContext, useVendor };
+export { VendorProvider, useVendor };

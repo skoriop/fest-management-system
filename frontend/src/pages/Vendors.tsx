@@ -7,8 +7,11 @@ function Vendors() {
 	const { getAllVendorsCallback } = useVendor();
 	const [vendors, setVendors] = useState([]);
 	useEffect(() => {
-		const data = getAllVendorsCallback();
-		setVendors(data);
+		async function getAllVendors() {
+			const data = await getAllVendorsCallback();
+			setVendors(data);
+		}
+		getAllVendors();
 	}, [getAllVendorsCallback]);
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12 pb-4">

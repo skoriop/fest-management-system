@@ -5,11 +5,14 @@ import { useVendor } from "@/contexts/VendorContext";
 import { Link, useParams } from "react-router-dom";
 
 function Vendor() {
-	const params = useParams();
+	const { id } = useParams();
 	const { vendor, getVendorByIdCallback } = useVendor();
 	useEffect(() => {
-		getVendorByIdCallback(params.id);
-	}, [getVendorByIdCallback, params.id]);
+		async function getById() {
+			await getVendorByIdCallback(id);
+		}
+		getById();
+	}, [getVendorByIdCallback, id]);
 
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12">
@@ -20,13 +23,13 @@ function Vendor() {
 				</h1>
 				<h3 className="text-center text-xl">{vendor.description}</h3>
 				<Link
-					to={`/vendor/${params.id}/update`}
+					to={`/vendor/${id}/update`}
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 				>
 					Update
 				</Link>
 				<Link
-					to={`/vendor/${params.id}/items`}
+					to={`/vendor/${id}/items`}
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 				>
 					Items
