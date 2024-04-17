@@ -45,3 +45,12 @@ def delete_vendor(vendor_id: int):
         db.cursor.execute(query, {'vendor_id': vendor_id})
         db.connection.commit()
         return True
+
+def get_all_vendors():
+    query = """
+    SELECT * FROM vendors"""
+    with PgDatabase() as db:
+        db.cursor.execute(query)
+        vendors = db.cursor.fetchall()
+        return vendors
+
