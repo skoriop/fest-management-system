@@ -48,3 +48,13 @@ def delete_item(vendor_id: int ,item_id: int):
         db.cursor.execute(query, {'item_id': item_id,'vendor_id': vendor_id})
         db.connection.commit()
         return True
+
+def get_vendor_orders_by_id(vendor_id: int):
+    query = """
+    SELECT I.vendor_id,CI.item_id,I.name,CI.quantity from cart_items CI, items I WHERE I.vendor_id = %(vendor_id)s and CI.item_id = I.id
+    """
+
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'vendor_id': vendor_id})
+        orders = db.cursor.fetchall()
+        return orders
