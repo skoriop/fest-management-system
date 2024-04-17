@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class vendor(BaseModel):
+class Vendor(BaseModel):
     id: Optional[int] = None
     name: str
     description: str
