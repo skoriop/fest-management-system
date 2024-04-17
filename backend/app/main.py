@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from .routers import user
+from .routers import user,vendor
 
 app = FastAPI()
 
@@ -13,7 +13,7 @@ async def http_exception_handler(request, exc):
     )
 
 app.include_router(user.router, prefix='/user')
-
+app.include_router(vendor.router, prefix='/vendor')
 @app.get('/')
 async def index():
     return {'message': 'App'}
