@@ -58,3 +58,13 @@ def get_vendor_orders_by_id(vendor_id: int):
         db.cursor.execute(query, {'vendor_id': vendor_id})
         orders = db.cursor.fetchall()
         return orders
+
+def get_all_vendor_items(vendor_id: int):
+    query = """
+    SELECT * FROM items WHERE items.vendor_id = %(vendor_id)s"""
+
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'vendor_id': vendor_id})
+        items = db.cursor.fetchall()
+        return items
+
