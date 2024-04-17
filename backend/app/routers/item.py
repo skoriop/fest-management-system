@@ -32,3 +32,15 @@ async def get(vendor_id: int,item_id: int):
         raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
 
 
+@router.post('/{vendor_id}/items/{item_id}/update')
+async def update(vendor_id: int,item_id: int, item: Item):
+    try:
+        item.vendor_id = vendor_id
+        updated_item = item_api.update_item(item_id, item)
+        return {
+            'message': 'Item updated successfully',
+            'data': updated_item
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
+
