@@ -41,3 +41,13 @@ async def update(vendor_id: int, vendor: Vendor):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
 
+@router.post('/{vendor_id}/delete')
+async def delete_vendor(vendor_id: int):
+    try:
+        vendor_api.delete_vendor(vendor_id)
+        return {
+            'message': 'Vendor deleted successfully',
+            'data': None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
