@@ -40,3 +40,14 @@ async def update_club(club_id: int, club: Club):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+@router.post("/{club_id}/delete")
+async def delete_club(club_id: int):
+    try:
+        clubs_api.delete_club_by_id(club_id)
+        return {
+            'message': 'Club deleted successfully',
+            'data': None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
