@@ -34,6 +34,17 @@ function App() {
 							<Route element={<User />} path="/user/:id" />
 							<Route element={<UserCreate />} path="/user/create" />
 							<Route element={<UserUpdate />} path="/user/:id/update" />
+							//Items
+							<Route element={<Items />} path="vendor/:id/item" />
+							<Route element={<Item />} path="vendor/:id/item/:itemid" />
+							<Route element={<ItemCreate />} path="vendor/:id/item/create" />
+							<Route
+								element={<ItemUpdate />}
+								path="vendor/:id/item/:itemid/update"
+							/>
+							//Orders
+							<Route element={<UserOrders />} path="user/:id/orders" />
+							<Route element={<OrderCreate />} path="user/:id/orders/create" />
 						</Routes>
 					</ItemProvider>
 				</VendorProvider>
