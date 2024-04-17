@@ -33,3 +33,17 @@ def delete_club_by_id(club_id: int):
         db.cursor.execute(query, {'id': club_id})
         db.connection.commit()
         return True
+    
+# Update a club by its id
+def update_club_by_id(club_id: int, club: Club):
+    query = """
+        UPDATE clubs
+        SET name = %(name)s, description = %(description)s, members = %(members)s
+        WHERE id = %(id)s
+        RETURNING *
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, vars(club))
+        club_record = db.cursor.fetchone()
+        db.connection.commit()
+        return club_record
