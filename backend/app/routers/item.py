@@ -44,3 +44,14 @@ async def update(vendor_id: int,item_id: int, item: Item):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
 
+@router.post('/{vendor_id}/items/{item_id}/delete')
+async def delete_item(vendor_id: int,item_id: int):
+    try:
+        item_api.delete_item(vendor_id,item_id)
+        return {
+            'message': 'Item deleted successfully',
+            'data': None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
+
