@@ -14,3 +14,18 @@ async def create_club(club: Club):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+@router.get("/{club_id}")
+async def get_club(club_id: int):
+    try:
+        club = clubs_api.get_club_by_id(club_id)
+        if not club:
+            raise HTTPException(status_code=404, detail="Club not found")
+        return {
+            'message': None,
+            'data': club
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
