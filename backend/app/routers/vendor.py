@@ -51,3 +51,18 @@ async def delete_vendor(vendor_id: int):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
+
+@router.get('/')
+async def get():
+    try:
+        vendors = vendor_api.get_all_vendors()
+        if not vendors:
+            raise HTTPException(status_code=404, detail='No Vendors found')
+        return {
+            'message': 'Success',
+            'data': vendors
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'An error occurred: ${str(e)}')
