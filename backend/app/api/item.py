@@ -17,7 +17,7 @@ def create_item(item: Item):
 # Gets a item by their ID
 def get_item_by_id(vendor_id: int,item_id: int):
     query = """
-        SELECT * FROM items WHERE id = %(item_id)s and vendor_id = %(vendor_id)s
+        SELECT * FROM items WHERE id = %(item_id)s AND vendor_id = %(vendor_id)s
     """
     with PgDatabase() as db:
         db.cursor.execute(query, {'item_id': item_id,'vendor_id': vendor_id})
@@ -30,7 +30,7 @@ def update_item(item_id: int, item: Item):
     query = """
         UPDATE items
         SET name = %(name)s, description = %(description)s, price = %(price)s, non_veg = %(non_veg)s, stock = %(stock)s
-        WHERE id = %(item_id)s and vendor_id = %(vendor_id)s
+        WHERE id = %(item_id)s AND vendor_id = %(vendor_id)s
         RETURNING *
     """
     with PgDatabase() as db:
@@ -42,7 +42,7 @@ def update_item(item_id: int, item: Item):
 # Delete a item
 def delete_item(vendor_id: int ,item_id: int):
     query = """
-        DELETE FROM items WHERE id = %(item_id)s and vendor_id = %(vendor_id)s
+        DELETE FROM items WHERE id = %(item_id)s AND vendor_id = %(vendor_id)s
     """
     with PgDatabase() as db:
         db.cursor.execute(query, {'item_id': item_id,'vendor_id': vendor_id})
@@ -51,7 +51,7 @@ def delete_item(vendor_id: int ,item_id: int):
 
 def get_vendor_orders_by_id(vendor_id: int):
     query = """
-    SELECT I.vendor_id,CI.item_id,I.name,CI.quantity from cart_items CI, items I WHERE I.vendor_id = %(vendor_id)s and CI.item_id = I.id
+    SELECT I.vendor_id,CI.item_id,I.name,CI.quantity FROM cart_items CI, items I WHERE I.vendor_id = %(vendor_id)s and CI.item_id = I.id
     """
 
     with PgDatabase() as db:
