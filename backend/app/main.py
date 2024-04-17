@@ -11,14 +11,15 @@ async def http_exception_handler(request, exc):
     return JSONResponse(
         status_code=exc.status_code if exc.status_code is not None else 500,
         content={"message": exc.detail, "data": None},
+        content={"message": exc.detail, "data": None},
     )
 
 
-app.include_router(user.router, prefix="/user")
-app.include_router(item.router, prefix="/vendor")
-app.include_router(item.router, prefix="/vendor")
 
 
-@app.get("/")
+app.include_router(user.router, prefix='/user')
+app.include_router(vendor.router, prefix='/vendor')
+app.include_router(item.router, prefix='/vendor')
+@app.get('/')
 async def index():
     return {"message": "App"}
