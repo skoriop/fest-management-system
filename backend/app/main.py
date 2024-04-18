@@ -25,9 +25,9 @@ async def http_exception_handler(request, exc):
     )
 
 
-app.include_router(user.router, prefix="/user")
-app.include_router(item.router, prefix="/vendor")
-app.include_router(vendor.router, prefix="/vendor")
+app.include_router(user.router)
+app.include_router(item.router)
+app.include_router(vendor.router)
 
 
 @app.get("/")
