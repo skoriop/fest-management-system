@@ -12,3 +12,13 @@ def create_venue(venue: Venue):
         venue_record = db.cursor.fetchone()
         db.connection.commit()
         return venue_record
+    
+def get_venue_by_id(venue_id: int):
+    query = """
+        SELECT * FROM venues WHERE id = %(venue_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'venue_id': venue_id})
+        venue = db.cursor.fetchone()
+        db.connection.commit()
+        return venue

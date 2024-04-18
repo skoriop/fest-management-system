@@ -5,7 +5,7 @@ class Venue(BaseModel):
     id: Optional[int] = None
     name: str
     capacity: int
-    venue_type: str
+    type: str
 
 class VenueEvent(BaseModel):
      venue_id: int
