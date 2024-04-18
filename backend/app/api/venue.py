@@ -44,3 +44,13 @@ def delete_venue(venue_id: int):
         db.cursor.execute(query, {'id': venue_id})
         db.connection.commit()
         return True
+    
+def get_venues():
+    query = """
+        SELECT * FROM venues
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query)
+        venues = db.cursor.fetchall()
+        db.connection.commit()
+        return venues
