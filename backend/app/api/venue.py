@@ -18,7 +18,20 @@ def get_venue_by_id(venue_id: int):
         SELECT * FROM venues WHERE id = %(venue_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'venue_id': venue_id})
+        db.cursor.execute(query, {'id': venue_id})
         venue = db.cursor.fetchone()
         db.connection.commit()
         return venue
+    
+def update_venue(venue_id: int, venue: Venue):
+    query = """
+        UPDATE venues
+        SET name = %(name)s, capacity = %(capacity)s, type = %(type)s
+        WHERE id = %(venue_id)s
+        RETURNING *
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'id': venue_id, **vars(venue)})
+        new_venue = db.cursor.fetchone()
+        db.connection.commit()
+        return new_venue
