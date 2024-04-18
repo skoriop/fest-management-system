@@ -1,5 +1,5 @@
 from app.db import PgDatabase
-from app.models.venue import Venue, VenueEvent
+from app.models.venue import Venue
 
 def create_venue(venue: Venue):
     query = """
@@ -18,7 +18,7 @@ def get_venue_by_id(venue_id: int):
         SELECT * FROM venues WHERE id = %(venue_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'id': venue_id})
+        db.cursor.execute(query, {'venue_id': venue_id})
         venue = db.cursor.fetchone()
         db.connection.commit()
         return venue
@@ -31,7 +31,7 @@ def update_venue(venue_id: int, venue: Venue):
         RETURNING *
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'id': venue_id, **vars(venue)})
+        db.cursor.execute(query, {'venue_id': venue_id, **vars(venue)})
         new_venue = db.cursor.fetchone()
         db.connection.commit()
         return new_venue
@@ -41,7 +41,7 @@ def delete_venue(venue_id: int):
         DELETE FROM venues WHERE id = %(venue_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'id': venue_id})
+        db.cursor.execute(query, {'venue_id': venue_id})
         db.connection.commit()
         return True
     

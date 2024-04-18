@@ -6,7 +6,3 @@ class Venue(BaseModel):
     name: str
     capacity: int
     type: str
-
-class VenueEvent(BaseModel):
-     venue_id: int
-     event_id: int
