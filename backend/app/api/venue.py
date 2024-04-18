@@ -35,3 +35,12 @@ def update_venue(venue_id: int, venue: Venue):
         new_venue = db.cursor.fetchone()
         db.connection.commit()
         return new_venue
+    
+def delete_venue(venue_id: int):
+    query = """
+        DELETE FROM venues WHERE id = %(venue_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {'id': venue_id})
+        db.connection.commit()
+        return True
