@@ -22,7 +22,7 @@ async def get_club(club_id: int):
         if not club:
             raise HTTPException(status_code=404, detail="Club not found")
         return {
-            'message': None,
+            'message': 'Success',
             'data': club
         }
     except HTTPException as e:
@@ -37,7 +37,7 @@ async def get_club_members(club_id: int):
         if not members:
             return {"message": "No members found", "data": None}
         return {
-            'message': None,
+            'message': 'Success',
             'data': members
         }
     except Exception as e:
