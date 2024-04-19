@@ -1,6 +1,7 @@
 from app.db import PgDatabase
 from app.models.user import User
 
+
 # Creates a new user
 def create_user(user: User):
     query = """
@@ -13,17 +14,19 @@ def create_user(user: User):
         user_record = db.cursor.fetchone()
         db.connection.commit()
         return user_record
-    
+
+
 # Gets a user by their ID
 def get_user_by_id(user_id: int):
     query = """
         SELECT * FROM users WHERE id = %(user_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'user_id': user_id})
+        db.cursor.execute(query, {"user_id": user_id})
         user = db.cursor.fetchone()
         db.connection.commit()
         return user
+
 
 # Update a user profile
 def update_user(user_id: int, user: User):
@@ -34,10 +37,11 @@ def update_user(user_id: int, user: User):
         RETURNING *
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'user_id': user_id, **vars(user)})
+        db.cursor.execute(query, {"user_id": user_id, **vars(user)})
         new_user = db.cursor.fetchone()
         db.connection.commit()
         return new_user
+
 
 # Delete a user
 def delete_user(user_id: int):
@@ -45,6 +49,6 @@ def delete_user(user_id: int):
         DELETE FROM users WHERE id = %(user_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'user_id': user_id})
+        db.cursor.execute(query, {"user_id": user_id})
         db.connection.commit()
         return True
