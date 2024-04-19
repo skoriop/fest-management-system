@@ -5,7 +5,7 @@ from app.models.item import Item
 router = APIRouter()
 
 
-@router.post("/{vendor_id}/items/create")
+@router.post("/vendor/{vendor_id}/items/create")
 async def create(vendor_id: int, item: Item):
     try:
         item.vendor_id = vendor_id
@@ -15,7 +15,7 @@ async def create(vendor_id: int, item: Item):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.get("/{vendor_id}/items/{item_id}")
+@router.get("/vendor/{vendor_id}/items/{item_id}")
 async def get(vendor_id: int, item_id: int):
     try:
         item = item_api.get_item_by_id(vendor_id, item_id)
@@ -28,7 +28,7 @@ async def get(vendor_id: int, item_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.post("/{vendor_id}/items/{item_id}/update")
+@router.post("/vendor/{vendor_id}/items/{item_id}/update")
 async def update(vendor_id: int, item_id: int, item: Item):
     try:
         item.vendor_id = vendor_id
@@ -38,7 +38,7 @@ async def update(vendor_id: int, item_id: int, item: Item):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.post("/{vendor_id}/items/{item_id}/delete")
+@router.post("/vendor/{vendor_id}/items/{item_id}/delete")
 async def delete_item(vendor_id: int, item_id: int):
     try:
         item_api.delete_item(vendor_id, item_id)
@@ -47,7 +47,7 @@ async def delete_item(vendor_id: int, item_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.get("/{vendor_id}/orders")
+@router.get("/vendor/{vendor_id}/orders")
 async def get_vendor_orders_by_id(vendor_id: int):
     try:
         orders = item_api.get_vendor_orders_by_id(vendor_id)
@@ -56,7 +56,7 @@ async def get_vendor_orders_by_id(vendor_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.get("/{vendor_id}/items")
+@router.get("/vendor/{vendor_id}/items")
 async def get_all_vendor_items(vendor_id: int):
     try:
         items = item_api.get_all_vendor_items(vendor_id)
