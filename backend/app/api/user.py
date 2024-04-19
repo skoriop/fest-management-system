@@ -30,13 +30,24 @@ def get_user_by_id(user_id: int):
 
 def get_user_registrations(user_id: int):
     query = """
-        SELECT * FROM registrations WHERE user_id = %(user_id)s
+        SELECT * FROM events JOIN registrations ON events.id = registrations.event_id WHERE registrations.user_id = %(user_id)s
     """
     with PgDatabase() as db:
         db.cursor.execute(query, {"user_id": user_id})
         registrations = db.cursor.fetchall()
         db.connection.commit()
         return registrations
+
+
+def get_user_clubs(user_id: int):
+    query = """
+        SELECT * FROM clubs JOIN club_members ON clubs.id = club_members.club_id WHERE club_members.user_id = %(user_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"user_id": user_id})
+        clubs = db.cursor.fetchall()
+        db.connection.commit()
+        return clubs
 
 
 # Update a user profile
