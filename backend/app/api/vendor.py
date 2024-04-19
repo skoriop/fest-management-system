@@ -62,7 +62,7 @@ def get_all_vendors():
 
 def get_vendor_sales(vendor_id: int):
     query = """
-        SELECT get_vendor_sales_summary(%(vendor_id)s)
+        SELECT * FROM get_vendor_sales_summary(%(vendor_id)s)
     """
     with PgDatabase() as db:
         db.cursor.execute(query, {"vendor_id": vendor_id})

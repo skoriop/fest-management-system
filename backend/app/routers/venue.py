@@ -40,6 +40,17 @@ async def get_venue(venue_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred ${str(e)}")
 
 
+@router.get("/venues/{venue_id}/schedule")
+async def get_venue_schedule(venue_id: int):
+    try:
+        schedule = venue_api.get_venue_schedule(venue_id)
+        return {"message": None, "data": schedule}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred ${str(e)}")
+
+
 @router.post("/venues/{venue_id}/update")
 async def update_venue(venue_id: int, venue: Venue):
     try:

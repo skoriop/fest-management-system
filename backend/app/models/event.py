@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from .venue import Venue
 
 
 class Event(BaseModel):
@@ -15,3 +16,4 @@ class Event(BaseModel):
     fee: int
     registrations: Optional[int] = None
     organizer_id: int
+    venues: list[int] = []

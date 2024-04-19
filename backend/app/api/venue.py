@@ -26,6 +26,17 @@ def get_venue_by_id(venue_id: int):
         return venue
 
 
+def get_venue_schedule(venue_id: int):
+    query = """
+        SELECT * FROM get_venue_schedule(%(venue_id)s)
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"venue_id": venue_id})
+        schedule = db.cursor.fetchall()
+        db.connection.commit()
+        return schedule
+
+
 def update_venue(venue_id: int, venue: Venue):
     query = """
         UPDATE venues

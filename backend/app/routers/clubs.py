@@ -49,6 +49,15 @@ async def get_club_events(club_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
+@router.get("/clubs/{club_id}/revenue")
+async def get_club_revenue(club_id: int):
+    try:
+        revenue = clubs_api.get_club_revenue(club_id)
+        return {"message": "Success", "data": revenue}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
 @router.post("/clubs/{club_id}/update")
 async def update_club(club_id: int, club: Club):
     try:
