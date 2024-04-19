@@ -38,6 +38,16 @@ def get_club_members(club_id: int):
         return club_members
 
 
+def get_club_revenue(club_id: int):
+    query = """
+        SELECT get_club_revenue(%(club_id)s) AS revenue
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"club_id": club_id})
+        revenue = db.cursor.fetchone()
+        return revenue
+
+
 # Delete a club by its id
 def delete_club_by_id(club_id: int):
     query = """
