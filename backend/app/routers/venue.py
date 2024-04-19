@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
 import app.api.venue as venue_api
 from app.models.venue import Venue
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
