@@ -49,9 +49,7 @@ async def delete_event(event_id: int):
 async def get_all_events():
     try:
         events = event_api.get_all_events()
-        if not events:
-            raise HTTPException(status_code=404, detail="No Events found")
-        return {"message": "Success", "data": events}
+        return {"message": None, "data": events}
     except HTTPException as e:
         raise e
     except Exception as e:
