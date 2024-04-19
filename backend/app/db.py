@@ -8,6 +8,7 @@ from psycopg2.extras import RealDictCursor
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 dotenv.load_dotenv(BASE_DIR / ".env")
 
+
 class Database(ABC):
     """
     Database context manager
@@ -29,6 +30,7 @@ class Database(ABC):
         self.cursor.close()
         self.connection.close()
 
+
 class PgDatabase(Database):
     """PostgreSQL Database context manager"""
 
@@ -42,5 +44,5 @@ class PgDatabase(Database):
             port=os.getenv("DB_PORT"),
             user=os.getenv("DB_USERNAME"),
             password=os.getenv("DB_PASSWORD"),
-            database=os.getenv("DB_NAME")
+            database=os.getenv("DB_NAME"),
         )
