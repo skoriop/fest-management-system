@@ -64,10 +64,21 @@ def update_club_by_id(club_id: int, club: Club):
         return club_record
 
 
+# Get all events of a club
+def get_club_events(club_id: int):
+    query = """
+        SELECT * FROM events WHERE organizer_id = %(club_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"club_id": club_id})
+        club_events = db.cursor.fetchall()
+        return club_events
+
+
 # Update a club's members by its id
 def update_club_members(club_id: int, user_id: int):
     query = """
-        UPDATE clubs_members
+        UPDATE club_members
         SET user_id = %(user_id)s
         WHERE club_id = %(club_id)s
         RETURNING *
