@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 import app.api.clubs as clubs_api
-from app.models.clubs import Club, ClubMembers
+from app.models.clubs import Club
 
 router = APIRouter()
 

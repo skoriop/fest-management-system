@@ -1,5 +1,5 @@
 from app.db import PgDatabase
-from app.models.clubs import Club, ClubMembers
+from app.models.clubs import Club
 
 # Creates a new club
 def create_club(club: Club):
