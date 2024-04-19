@@ -7,6 +7,3 @@ class Club(BaseModel):
     description: str
     members: int = 0
 
-class ClubMembers(BaseModel):
-    club_id: int
-    user_id: int
