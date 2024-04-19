@@ -27,6 +27,32 @@ async def get(user_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
+@router.get("/user/{user_id}/registrations")
+async def get_registrations(user_id: int):
+    try:
+        registrations = user_api.get_user_registrations(user_id)
+        if not registrations:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"message": None, "data": registrations}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
+
+
+@router.get("/user/{user_id}/clubs")
+async def get_clubs(user_id: int):
+    try:
+        clubs = user_api.get_user_clubs(user_id)
+        if not clubs:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"message": None, "data": clubs}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
+
+
 @router.post("/user/{user_id}/update")
 async def update(user_id: int, user: User):
     try:

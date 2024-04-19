@@ -27,6 +27,17 @@ async def get(event_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
+@router.get("/events/{event_id}/registrations")
+async def get_event_registrations(event_id: int):
+    try:
+        registrations = event_api.get_event_registrations(event_id)
+        return {"message": None, "data": registrations}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
+
+
 @router.post("/events/{event_id}/update")
 async def update(event_id: int, event: Event):
     try:

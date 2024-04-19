@@ -43,6 +43,17 @@ def get_event_by_id(event_id: int):
         return event
 
 
+def get_event_registrations(event_id: int):
+    query = """
+        SELECT * FROM users JOIN registrations ON users.id = registrations.user_id WHERE registrations.event_id = %(event_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"event_id": event_id})
+        registrations = db.cursor.fetchall()
+        db.connection.commit()
+        return registrations
+
+
 def update_event(event_id: int, event: Event):
     query = """
         UPDATE events
