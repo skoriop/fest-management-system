@@ -1,6 +1,7 @@
 from app.db import PgDatabase
 from app.models.clubs import Club
 
+
 # Creates a new club
 def create_club(club: Club):
     query = """
@@ -13,16 +14,18 @@ def create_club(club: Club):
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record
-    
+
+
 # Get a club by its id
 def get_club_by_id(club_id: int):
     query = """
         SELECT * FROM clubs WHERE id = %(id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'id': club_id})
+        db.cursor.execute(query, {"id": club_id})
         club_record = db.cursor.fetchone()
         return club_record
+
 
 # Get all members of a club
 def get_club_members(club_id: int):
@@ -30,9 +33,10 @@ def get_club_members(club_id: int):
         SELECT * FROM users JOIN club_members ON users.id = club_members.user_id WHERE club_members.club_id = %(club_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'club_id': club_id})
+        db.cursor.execute(query, {"club_id": club_id})
         club_members = db.cursor.fetchall()
         return club_members
+
 
 # Delete a club by its id
 def delete_club_by_id(club_id: int):
@@ -40,10 +44,11 @@ def delete_club_by_id(club_id: int):
         DELETE FROM clubs WHERE id = %(id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'id': club_id})
+        db.cursor.execute(query, {"id": club_id})
         db.connection.commit()
         return True
-    
+
+
 # Update a club by its id
 def update_club_by_id(club_id: int, club: Club):
     query = """
@@ -53,11 +58,12 @@ def update_club_by_id(club_id: int, club: Club):
         RETURNING *
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {'club_id': club_id, **vars(club)})
+        db.cursor.execute(query, {"club_id": club_id, **vars(club)})
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record
- 
+
+
 # Update a club's members by its id
 def update_club_members(club_id: int, user_id: int):
     query = """
@@ -68,7 +74,7 @@ def update_club_members(club_id: int, user_id: int):
     """
     # TODO: Trigger to update member count in clubs table
     with PgDatabase() as db:
-        db.cursor.execute(query, {'user_id': user_id, 'club_id': club_id})
+        db.cursor.execute(query, {"user_id": user_id, "club_id": club_id})
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record
