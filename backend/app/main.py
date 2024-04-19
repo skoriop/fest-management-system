@@ -30,6 +30,7 @@ app.include_router(item.router, prefix="/vendor")
 app.include_router(vendor.router, prefix="/vendor")
 app.include_router(event.router, prefix="/events")
 
+
 @app.get("/")
 async def index():
     return {"message": "App"}

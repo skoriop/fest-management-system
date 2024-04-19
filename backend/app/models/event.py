@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 
+
 class Event(BaseModel):
     id: Optional[int] = None
     name: str

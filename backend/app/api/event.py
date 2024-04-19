@@ -58,4 +58,3 @@ def get_all_events():
         db.cursor.execute(query)
         events = db.cursor.fetchall()
         return events
-
