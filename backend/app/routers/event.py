@@ -5,7 +5,7 @@ from app.models.event import Event
 router = APIRouter()
 
 
-@router.post("/create")
+@router.post("/events/create")
 async def create(event: Event):
     try:
         created_event = event_api.create_event(event)
@@ -14,7 +14,7 @@ async def create(event: Event):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.get("/{event_id}")
+@router.get("/events/{event_id}")
 async def get(event_id: int):
     try:
         event = event_api.get_event_by_id(event_id)
@@ -27,7 +27,7 @@ async def get(event_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.post("/{event_id}/update")
+@router.post("/events/{event_id}/update")
 async def update(event_id: int, event: Event):
     try:
         updated_event = event_api.update_event(event_id, event)
@@ -36,7 +36,7 @@ async def update(event_id: int, event: Event):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.post("/{event_id}/delete")
+@router.post("/events/{event_id}/delete")
 async def delete_event(event_id: int):
     try:
         event_api.delete_event(event_id)
@@ -45,7 +45,7 @@ async def delete_event(event_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.get("/")
+@router.get("/events")
 async def get_all_events():
     try:
         events = event_api.get_all_events()
