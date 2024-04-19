@@ -37,7 +37,7 @@ async def get_venue(venue_id: int):
         if not venue:
             raise HTTPException(status_code=404, detail="Venue not found")
         return {
-            'message': None,
+            'message': 'Success',
             'data': venue
         }
     except HTTPException as e:
