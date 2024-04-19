@@ -34,6 +34,8 @@ async def get_club(club_id: int):
 async def get_club_members(club_id: int):
     try:
         members = clubs_api.get_club_members(club_id)
+        if not members:
+            return {"message": "No members found", "data": None}
         return {
             'message': None,
             'data': members
