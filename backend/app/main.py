@@ -30,8 +30,8 @@ app.include_router(user.router)
 app.include_router(user_order.router)
 app.include_router(item.router)
 app.include_router(vendor.router)
-app.include_router(clubs.router, prefix='/clubs')
-app.include_router(venue.router, prefix='/venues')
+app.include_router(clubs.router)
+app.include_router(venue.router)
 app.include_router(event.router)
 
 
