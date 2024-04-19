@@ -27,6 +27,19 @@ async def get(user_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
+@router.get("/user/{user_id}/registrations")
+async def get_registrations(user_id: int):
+    try:
+        user = user_api.get_user_registrations(user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"message": None, "data": user}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
+
+
 @router.post("/user/{user_id}/update")
 async def update(user_id: int, user: User):
     try:

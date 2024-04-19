@@ -28,6 +28,17 @@ def get_user_by_id(user_id: int):
         return user
 
 
+def get_user_registrations(user_id: int):
+    query = """
+        SELECT * FROM registrations WHERE user_id = %(user_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"user_id": user_id})
+        registrations = db.cursor.fetchall()
+        db.connection.commit()
+        return registrations
+
+
 # Update a user profile
 def update_user(user_id: int, user: User):
     query = """
