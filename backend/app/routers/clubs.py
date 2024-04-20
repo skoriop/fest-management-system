@@ -1,5 +1,5 @@
 import app.api.clubs as clubs_api
-from app.models.clubs import Club, ClubMember
+from app.models.clubs import Club
 from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
@@ -69,10 +69,12 @@ async def add_club_member(club_id: int, email: str):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@router.post("/clubs/{club_id}/remove_member")
-async def remove_club_member(club_id: int, user: ClubMember):
+@router.post("/clubs/{club_id}/remove_member/{email}")
+async def remove_club_member(club_id: int, email: str):
     try:
-        updated_club = clubs_api.remove_club_member(club_id, user.id)
+        updated_club = clubs_api.remove_club_member(club_id, email)
+        if not updated_club:
+            raise HTTPException(status_code=404, detail="User not found")
         return {"message": "Club updated successfully", "data": updated_club}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
