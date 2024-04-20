@@ -58,10 +58,12 @@ async def update_club(club_id: int, club: Club):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@router.post("/clubs/{club_id}/add_member")
-async def add_club_member(club_id: int, user: ClubMember):
+@router.post("/clubs/{club_id}/add_member/{email}")
+async def add_club_member(club_id: int, email: str):
     try:
-        updated_club = clubs_api.add_club_member(club_id, user.id)
+        updated_club = clubs_api.add_club_member(club_id, email)
+        if not updated_club:
+            raise HTTPException(status_code=404, detail="User not found")
         return {"message": "Club updated successfully", "data": updated_club}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
