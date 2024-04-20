@@ -23,12 +23,6 @@ function Navbar() {
 				Vendors
 			</Link>
 			<Link
-				to="/order"
-				className="text-2xl uppercase font-bold hover:text-slate-300"
-			>
-				Orders
-			</Link>
-			<Link
 				to="/club"
 				className="text-2xl uppercase font-bold hover:text-slate-300"
 			>
