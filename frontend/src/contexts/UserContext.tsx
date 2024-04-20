@@ -104,7 +104,7 @@ const UserProvider = ({ children }) => {
 				navigate(`/user/${res.data.data.id}`);
 			}
 		} catch (err) {
-			console.log(err);
+			console.log("Error while querying for user:", err);
 		}
 	};
 
@@ -119,7 +119,7 @@ const UserProvider = ({ children }) => {
 				navigate("/user/create");
 			}
 		} catch (err) {
-			console.log(err);
+			console.log("Error while querying for user:", err);
 		}
 	};
 	const updateUser = async (
@@ -151,13 +151,29 @@ const UserProvider = ({ children }) => {
 				navigate(`/user/${id}`);
 			}
 		} catch (err) {
-			console.log(err.message);
+			console.log("Error while querying for user:", err.message);
 		}
 	};
+
+	const getUserByEmail = async (email: string) => {
+		try {
+			const res = await axios({
+				method: "get",
+				url: `http://localhost:8000/user/email/${email}`,
+			});
+			if (res.statusText === "OK") {
+				navigate(`/user/${res.data.data.id}`);
+			}
+		} catch (err) {
+			console.log("Error while querying for user:", err.message);
+		}
+	};
+
 	const getUserByIdCallback = useCallback(getUserById, []);
 	const createUserCallback = useCallback(createUser, []);
 	const deleteUserCallback = useCallback(deleteUser, []);
 	const updateUserCallback = useCallback(updateUser, []);
+	const getUserByEmailCallback = useCallback(getUserByEmail, []);
 
 	return (
 		<UserContext.Provider
@@ -167,6 +183,7 @@ const UserProvider = ({ children }) => {
 				createUserCallback,
 				deleteUserCallback,
 				updateUserCallback,
+				getUserByEmailCallback,
 			}}
 		>
 			{children}
