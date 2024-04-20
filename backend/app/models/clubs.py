@@ -10,5 +10,3 @@ class Club(BaseModel):
     members: int = 0
 
 
-class ClubMember(BaseModel):
-    id: Optional[int] = None
