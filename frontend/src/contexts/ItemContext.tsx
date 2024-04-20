@@ -64,7 +64,6 @@ function ItemProvider({ children }) {
 				method: "get",
 				url: `http://localhost:8000/vendor/${vid}/items`,
 			});
-			console.log(res);
 			if (res.statusText === "OK") {
 				if (res.data.data.length === 0) return [];
 				return res.data.data;
@@ -75,11 +74,11 @@ function ItemProvider({ children }) {
 		}
 	};
 
-	const getItemById = async (vid: string, iid: string) => {
+	const getItemById = async (iid: string) => {
 		try {
 			const res = await axios({
 				method: "get",
-				url: `http://localhost:8000/vendor/${vid}/items/${iid}`,
+				url: `http://localhost:8000/items/${iid}`,
 			});
 			if (res.statusText === "OK") {
 				dispatch({ type: "item/get", payload: res.data.data });
@@ -188,4 +187,4 @@ const useItem = () => {
 	return context;
 };
 
-export { ItemProvider, useItem };
+export { ItemProvider, useItem, type itemType };

@@ -1,4 +1,3 @@
-// import { useContext, useEffect } from "react";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useVendor } from "@/contexts/VendorContext";
@@ -29,7 +28,7 @@ function Vendor() {
 					Update
 				</Link>
 				<Link
-					to={`/vendor/${id}/items`}
+					to={`/vendor/${id}/item`}
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 				>
 					Items

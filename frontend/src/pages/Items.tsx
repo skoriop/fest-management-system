@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import { useItem } from "@/contexts/ItemContext";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import type { itemType } from "../contexts/ItemContext";
 
 function Items() {
 	const { id } = useParams();
@@ -25,7 +26,7 @@ function Items() {
 				Create Item
 			</Link>
 			<div className="grid grid-cols-3 gap-12 px-6 py-2">
-				{items.map((item) => {
+				{items.map((item: itemType) => {
 					return (
 						<Link
 							to={`/vendor/${id}/item/${item.id}`}

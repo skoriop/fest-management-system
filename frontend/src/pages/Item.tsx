@@ -7,8 +7,8 @@ function Item() {
 	const { id, itemid } = useParams();
 	const { item, getItemByIdCallback } = useItem();
 	useEffect(() => {
-		getItemByIdCallback(id, itemid);
-	}, [getItemByIdCallback, id, itemid]);
+		getItemByIdCallback(itemid);
+	}, [getItemByIdCallback, itemid]);
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12">
 			<Navbar />
