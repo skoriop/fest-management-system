@@ -147,6 +147,23 @@ function EventProvider({ children }) {
 		}
 	};
 
+	const registerEvent = async (id: number, email: string) => {
+		try {
+			const res = await axios({
+				method: "post",
+				url: `http://localhost:8000/events/${id}/register/${email}`,
+				data: {
+					email,
+				},
+			});
+			if (res.statusText === "OK") {
+				navigate("/events");
+			}
+		} catch (err) {
+			console.log("Error while querying for event", err.message);
+		}
+	};
+
 	const deleteEvent = async (id: string) => {
 		try {
 			const res = await axios({
@@ -163,6 +180,7 @@ function EventProvider({ children }) {
 
 	const getAllEventsCallback = useCallback(getAllEvents, []);
 	const getEventByIdCallback = useCallback(getEventById, []);
+	const registerEventCallback = useCallback(registerEvent, []);
 	const createEventCallback = useCallback(createEvent, []);
 	const updateEventCallback = useCallback(updateEvent, []);
 	const deleteEventCallback = useCallback(deleteEvent, []);
@@ -172,6 +190,7 @@ function EventProvider({ children }) {
 				event,
 				getAllEventsCallback,
 				getEventByIdCallback,
+				registerEventCallback,
 				createEventCallback,
 				updateEventCallback,
 				deleteEventCallback,
