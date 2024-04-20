@@ -58,3 +58,19 @@ def get_all_events():
         db.cursor.execute(query)
         events = db.cursor.fetchall()
         return events
+
+
+def register_for_event(email: str, event_id: int):
+    query1 = """
+        SELECT id FROM users  WHERE email = %(email_id)s"""
+    query2 = """
+    INSERT INTO registrations VALUES(%(user_id)s,%(event_id)s) RETURNING *"""
+    with PgDatabase() as db:
+        db.cursor.execute(query1, {"email_id": email})
+        user_id = db.cursor.fetchone()
+        if not user_id:
+            return None
+        db.cursor.execute(query2, {"event_id": event_id, "user_id": user_id["id"]})
+        registration = db.cursor.fetchone()
+        db.connection.commit()
+        return registration

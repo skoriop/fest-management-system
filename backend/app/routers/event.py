@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
 import app.api.event as event_api
 from app.models.event import Event
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
@@ -52,5 +52,16 @@ async def get_all_events():
         return {"message": None, "data": events}
     except HTTPException as e:
         raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
+
+
+@router.post("/events/{event_id}/register/{email}")
+async def update(event_id: int, email: str):
+    try:
+        registration = event_api.register_for_event(email, event_id)
+        if not registration:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"message": "Event registered successfully", "data": registration}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
