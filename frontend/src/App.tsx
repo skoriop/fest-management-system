@@ -31,6 +31,8 @@ import ClubEvents from "./pages/ClubEvents";
 import { EventProvider } from "./contexts/EventContext";
 import AddEvent from "./pages/AddEvent";
 import EventUpdate from "./pages/EventUpdate";
+import Events from "./pages/Events";
+import EventRegister from "./pages/EventRegister";
 
 function App() {
 	return (
@@ -44,6 +46,12 @@ function App() {
 									<EventProvider>
 										<Routes>
 											<Route element={<Home />} path="/" />
+											//Events
+											<Route element={<Events />} path="/event" />
+											<Route
+												element={<EventRegister />}
+												path="/event/:id/register"
+											/>
 											//Clubs
 											<Route element={<Clubs />} path="/club" />
 											<Route element={<ClubCreate />} path="/club/create" />
