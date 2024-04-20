@@ -74,3 +74,14 @@ def delete_user(user_id: int):
         db.cursor.execute(query, {"user_id": user_id})
         db.connection.commit()
         return True
+
+
+def get_user_by_email(email_id: str):
+    query = """
+        SELECT id FROM users WHERE email = %(email)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"email": email_id})
+        user_id = db.cursor.fetchone()
+        db.connection.commit()
+        return user_id
