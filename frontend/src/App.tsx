@@ -25,6 +25,8 @@ import ClubMembers from "./pages/ClubMembers";
 import AddMember from "./pages/AddMember";
 import UserOrders from "./pages/UserOrders";
 import OrderCreate from "./pages/OrderCreate";
+import { OrderProvider } from "./contexts/OrderContext";
+import UserOrder from "./pages/UserOrder";
 
 function App() {
 	return (
@@ -34,43 +36,55 @@ function App() {
 					<ClubProvider>
 						<ItemProvider>
 							<MemberProvider>
-								<Routes>
-									<Route element={<Home />} path="/" />
-									//Clubs
-									<Route element={<Clubs />} path="/club" />
-									<Route element={<ClubCreate />} path="/club/create" />
-									<Route element={<Club />} path="/club/:id" />
-									<Route element={<ClubUpdate />} path="/club/:id/update" />
-									<Route element={<ClubMembers />} path="/club/:id/members" />
-									<Route element={<AddMember />} path="/club/:id/members/add" />
-									//Vendors
-									<Route element={<Vendors />} path="/vendor" />
-									<Route element={<VendorCreate />} path="/vendor/create" />
-									<Route element={<Vendor />} path="/vendor/:id" />
-									<Route element={<VendorUpdate />} path="/vendor/:id/update" />
-									//Users
-									<Route element={<Users />} path="/user" />
-									<Route element={<User />} path="/user/:id" />
-									<Route element={<UserCreate />} path="/user/create" />
-									<Route element={<UserUpdate />} path="/user/:id/update" />
-									//Items
-									<Route element={<Items />} path="vendor/:id/item" />
-									<Route element={<Item />} path="vendor/:id/item/:itemid" />
-									<Route
-										element={<ItemCreate />}
-										path="vendor/:id/item/create"
-									/>
-									<Route
-										element={<ItemUpdate />}
-										path="vendor/:id/item/:itemid/update"
-									/>
-									//Orders
-									<Route element={<UserOrders />} path="user/:id/orders" />
-									<Route
-										element={<OrderCreate />}
-										path="user/:id/orders/create"
-									/>
-								</Routes>
+								<OrderProvider>
+									<Routes>
+										<Route element={<Home />} path="/" />
+										//Clubs
+										<Route element={<Clubs />} path="/club" />
+										<Route element={<ClubCreate />} path="/club/create" />
+										<Route element={<Club />} path="/club/:id" />
+										<Route element={<ClubUpdate />} path="/club/:id/update" />
+										<Route element={<ClubMembers />} path="/club/:id/members" />
+										<Route
+											element={<AddMember />}
+											path="/club/:id/members/add"
+										/>
+										//Vendors
+										<Route element={<Vendors />} path="/vendor" />
+										<Route element={<VendorCreate />} path="/vendor/create" />
+										<Route element={<Vendor />} path="/vendor/:id" />
+										<Route
+											element={<VendorUpdate />}
+											path="/vendor/:id/update"
+										/>
+										//Users
+										<Route element={<Users />} path="/user" />
+										<Route element={<User />} path="/user/:id" />
+										<Route element={<UserCreate />} path="/user/create" />
+										<Route element={<UserUpdate />} path="/user/:id/update" />
+										//Items
+										<Route element={<Items />} path="vendor/:id/item" />
+										<Route element={<Item />} path="vendor/:id/item/:itemid" />
+										<Route
+											element={<ItemCreate />}
+											path="vendor/:id/item/create"
+										/>
+										<Route
+											element={<ItemUpdate />}
+											path="vendor/:id/item/:itemid/update"
+										/>
+										//Orders
+										<Route
+											element={<OrderCreate />}
+											path="user/:id/order/create"
+										/>
+										<Route element={<UserOrders />} path="user/:id/order" />
+										<Route
+											element={<UserOrder />}
+											path="user/:id/order/:orderid"
+										/>
+									</Routes>
+								</OrderProvider>
 							</MemberProvider>
 						</ItemProvider>
 					</ClubProvider>
