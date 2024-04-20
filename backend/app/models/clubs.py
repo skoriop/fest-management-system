@@ -9,3 +9,6 @@ class Club(BaseModel):
     description: str
     members: int = 0
 
+
+class ClubMember(BaseModel):
+    id: Optional[int] = None
