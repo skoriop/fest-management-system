@@ -35,6 +35,12 @@ function Club() {
 				>
 					Members
 				</Link>
+				<Link
+					to={`/club/${id}/events`}
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+				>
+					Manage Events
+				</Link>
 			</div>
 		</div>
 	);
