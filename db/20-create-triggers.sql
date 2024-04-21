@@ -100,9 +100,3 @@ BEGIN
     RETURN NEW;
 END;
 $$;
-
-CREATE TRIGGER club_members_remove_update
-    AFTER DELETE ON public.club_members
-    FOR EACH ROW
-    EXECUTE FUNCTION members_remove_update();
-
