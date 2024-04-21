@@ -56,6 +56,19 @@ const ClubProvider = ({ children }) => {
 			console.log("Error while querying for club:", err.message);
 		}
 	};
+	const getClubRevenue = async (id: string) => {
+		try {
+			const res = await axios({
+				method: "get",
+				url: `http://localhost:8000/clubs/${id}/revenue`,
+			});
+			if (res.statusText === "OK") {
+				return res.data.data;
+			}
+		} catch (err) {
+			console.log("Error while querying for club:", err.message);
+		}
+	};
 
 	const getAllClubs = async () => {
 		try {
@@ -132,6 +145,7 @@ const ClubProvider = ({ children }) => {
 		}
 	};
 
+	const getClubRevenueCallback = useCallback(getClubRevenue, []);
 	const getClubByIdCallback = useCallback(getClubById, []);
 	const getAllClubsCallback = useCallback(getAllClubs, []);
 	const createClubCallback = useCallback(createClub, []);
@@ -143,6 +157,7 @@ const ClubProvider = ({ children }) => {
 		<ClubContext.Provider
 			value={{
 				club,
+				getClubRevenueCallback,
 				getClubByIdCallback,
 				getAllClubsCallback,
 				createClubCallback,
