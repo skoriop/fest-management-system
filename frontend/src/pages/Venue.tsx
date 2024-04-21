@@ -13,6 +13,7 @@ function Venue() {
 		async function getById() {
 			await getVenueByIdCallback(id);
 			const data = await getVenueEventsCallback(id);
+			console.log(data);
 			setEvents(data);
 		}
 		getById();
@@ -29,8 +30,9 @@ function Venue() {
 					{venue.name}
 				</h1>
 				<h3 className="text-center text-xl">{venue.type}</h3>
-				<h3 className="text-center text-xl">{venue.capacity} members</h3>
-				<div className="grid grid-cols-3 gap-12 px-6 py-2">
+				<h3 className="text-center text-xl">Capacity: {venue.capacity}</h3>
+				<h2 className="text-center text-4xl font-bold">Schedule</h2>
+				<div className="grid grid-cols-1 gap-12 px-6 py-2">
 					{events.map((event: eventType) => {
 						return (
 							<div className="flex flex-col members-center border-slate-200 border-2 px-12 py-10 space-y-1">
