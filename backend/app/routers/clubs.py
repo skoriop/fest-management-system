@@ -36,6 +36,26 @@ async def get_club_members(club_id: int):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
+@router.get("/clubs/{club_id}/events")
+async def get_club_events(club_id: int):
+    try:
+        events = clubs_api.get_club_events(club_id)
+        if not events:
+            return {"message": "No events found", "data": None}
+        return {"message": "Success", "data": events}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
+@router.get("/clubs/{club_id}/revenue")
+async def get_club_revenue(club_id: int):
+    try:
+        revenue = clubs_api.get_club_revenue(club_id)
+        return {"message": "Success", "data": revenue}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
 @router.get("/clubs")
 async def get_all_clubs():
     try:

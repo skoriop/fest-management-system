@@ -38,6 +38,16 @@ def get_club_members(club_id: int):
         return club_members
 
 
+def get_club_revenue(club_id: int):
+    query = """
+        SELECT get_club_revenue(%(club_id)s) AS revenue
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"club_id": club_id})
+        revenue = db.cursor.fetchone()
+        return revenue
+
+
 def get_all_clubs():
     query = """
         SELECT * FROM clubs
@@ -72,6 +82,17 @@ def update_club_by_id(club_id: int, club: Club):
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record
+
+
+# Get all events of a club
+def get_club_events(club_id: int):
+    query = """
+        SELECT * FROM events WHERE organizer_id = %(club_id)s
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query, {"club_id": club_id})
+        club_events = db.cursor.fetchall()
+        return club_events
 
 
 # Add a member to a club
