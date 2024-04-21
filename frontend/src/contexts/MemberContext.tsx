@@ -51,14 +51,11 @@ function MemberProvider({ children }) {
 		}
 	};
 
-	const addMember = async (id: number, userid: number) => {
+	const addMember = async (id: number, email: string) => {
 		try {
 			const res = await axios({
 				method: "post",
-				url: `http://localhost:8000/clubs/${id}/add_member`,
-				data: {
-					id: userid,
-				},
+				url: `http://localhost:8000/clubs/${id}/add_member/${email}`,
 			});
 			if (res.statusText === "OK") {
 				navigate(`/club/${id}/members`);
@@ -68,14 +65,11 @@ function MemberProvider({ children }) {
 		}
 	};
 
-	const removeMember = async (id: number, userid: number) => {
+	const removeMember = async (id: number, email: string) => {
 		try {
 			const res = await axios({
 				method: "post",
-				url: `http://localhost:8000/clubs/${id}/remove_member`,
-				data: {
-					id: userid,
-				},
+				url: `http://localhost:8000/clubs/${id}/remove_member/${email}`,
 			});
 			if (res.statusText === "OK") {
 				navigate(0);

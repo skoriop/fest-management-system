@@ -104,12 +104,11 @@ const ClubProvider = ({ children }) => {
 			console.log("Error while querying for club:", err.message);
 		}
 	};
-	const addMember = async (id: string, userid: string) => {
+	const addMember = async (id: string, email: string) => {
 		try {
 			const res = await axios({
 				method: "post",
-				url: `http://localhost:8000/clubs/${id}/add_member`,
-				data: { id: userid },
+				url: `http://localhost:8000/clubs/${id}/add_member/${email}`,
 			});
 
 			if (res.statusText === "OK") {
