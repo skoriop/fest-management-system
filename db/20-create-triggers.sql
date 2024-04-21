@@ -18,7 +18,10 @@ CREATE OR REPLACE FUNCTION spent_events()
 RETURNS TRIGGER AS $$
 BEGIN
     UPDATE users u
-    SET spent = spent + (SELECT fee FROM events WHERE NEW.event_id=id AND NEW.user_id=u.id);
+    SET spent = spent + (
+        SELECT COALESCE(SUM(fee), 0) FROM events e 
+        WHERE NEW.event_id=e.id AND NEW.user_id=u.id
+    );
     RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
