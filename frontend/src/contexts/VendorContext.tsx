@@ -126,7 +126,10 @@ const VendorProvider = ({ children }) => {
 				method: "get",
 				url: `http://localhost:8000/vendor/${id}/sales`,
 			});
-			console.log(res);
+			if (res.statusText === "OK") {
+				return res.data.data;
+			}
+			return [];
 		} catch (err) {
 			console.log("Error while querying for vendor:", err.message);
 		}
