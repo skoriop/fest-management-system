@@ -66,8 +66,43 @@ BEGIN
     WHERE e.id=NEW.event_id;
     RETURN NEW;
 END;
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE TRIGGER event_last_updated_update
 AFTER UPDATE ON registrations
 FOR EACH ROW
 EXECUTE PROCEDURE event_last_updated();
+
+
+create function members_add_update()
+    returns trigger
+    language plpgsql as $$
+BEGIN
+UPDATE clubs c
+SET members = members + 1
+WHERE c.id=NEW.club_id;
+RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER club_members_remove_update
+    AFTER DELETE ON public.club_members
+    FOR EACH ROW
+    EXECUTE FUNCTION members_add_update();
+
+create function members_remove_update()
+    returns trigger
+    language plpgsql as $$
+BEGIN
+    UPDATE clubs c
+    SET members = members - 1
+    WHERE c.id=OLD.club_id;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER club_members_remove_update
+    AFTER DELETE ON public.club_members
+    FOR EACH ROW
+    EXECUTE FUNCTION members_remove_update();
+
