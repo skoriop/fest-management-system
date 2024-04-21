@@ -22,26 +22,30 @@ function Vendor() {
 				</h1>
 				<h3 className="text-center text-xl pb-3">{vendor.description}</h3>
 
-				<div className="flex">
-					<Link
-						to={`/vendor/${id}/update`}
-						className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
-					>
-						Update
-					</Link>
-					<Link
-						to={`/vendor/${id}/sales`}
-						className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
-					>
-						Sales
-					</Link>
-					<Link
-						to={`/vendor/${id}/item`}
-						className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
-					>
-						Items
-					</Link>
-				</div>
+				<Link
+					to={`/vendor/${id}/update`}
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+				>
+					Update
+				</Link>
+				<Link
+					to={`/vendor/${id}/sales`}
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+				>
+					Sales
+				</Link>
+				<Link
+					to={`/vendor/${id}/item`}
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+				>
+					Items
+				</Link>
+				<Link
+					to={`/vendor/${id}/orders`}
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+				>
+					Orders
+				</Link>
 			</div>
 		</div>
 	);

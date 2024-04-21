@@ -39,6 +39,7 @@ import { VenueProvider } from "./contexts/VenueContext";
 import VenueCreate from "./pages/VenueCreate";
 import Venue from "./pages/Venue";
 import VendorSales from "./pages/VendorSales";
+import VendorOrders from "./pages/VendorOrders";
 
 function App() {
 	return (
@@ -185,6 +186,10 @@ function App() {
 											<Route
 												element={<VendorSales />}
 												path="/vendor/:id/sales"
+											/>
+											<Route
+												element={<VendorOrders />}
+												path="/vendor/:id/orders"
 											/>
 											//Users
 											<Route element={<Users />} path="/user" />

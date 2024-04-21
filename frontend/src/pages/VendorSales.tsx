@@ -17,6 +17,7 @@ function VendorSales() {
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12 pb-4">
 			<Navbar />
+			<h1 className="text-yellow-200 text-4xl font-bold">Sales</h1>
 			<div className="grid grid-cols-3 gap-12 px-6 py-2">
 				{sales.map((sale) => {
 					return (
