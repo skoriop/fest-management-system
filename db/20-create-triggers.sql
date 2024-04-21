@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION spent_order()
 RETURNS TRIGGER AS $$
 BEGIN
     UPDATE users u
-    SET spent = spent + (SELECT SUM(price * quantity) FROM items WHERE NEW.item_id=id)
+    SET spent = spent + (SELECT SUM(price * NEW.quantity) FROM items WHERE NEW.item_id=id)
     WHERE EXISTS (SELECT * FROM orders o WHERE o.id=NEW.order_id AND u.id=o.placed_by);
     
     RETURN NEW;
@@ -31,9 +31,9 @@ EXECUTE PROCEDURE spent_events();
 CREATE OR REPLACE FUNCTION stock()
 RETURNS TRIGGER AS $$
 BEGIN
-    UPDATE items i
-    SET i.stock = i.stock - NEW.quantity
-    WHERE i.id=NEW.item_id;
+    UPDATE items 
+    SET stock = stock - NEW.quantity
+    WHERE id=NEW.item_id;
     RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;

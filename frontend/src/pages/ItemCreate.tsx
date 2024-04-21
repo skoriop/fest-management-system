@@ -9,8 +9,8 @@ function ItemCreate() {
 	const { createItemCallback } = useItem();
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
-	const [price, setPrice] = useState(0);
-	const [stock, setStock] = useState(0);
+	const [price, setPrice] = useState("");
+	const [stock, setStock] = useState("");
 	const [nonveg, setNonveg] = useState(false);
 
 	return (
@@ -33,7 +33,7 @@ function ItemCreate() {
 						type="text"
 						className="text-black text-center p-1 border-2 border-slate-600"
 						value={price}
-						onChange={(e) => setPrice(+e.target.value)}
+						onChange={(e) => setPrice(e.target.value)}
 					/>
 				</div>
 				<div className="flex justify-between space-x-4">
@@ -42,7 +42,7 @@ function ItemCreate() {
 						type="text"
 						className="text-black text-center p-1 border-2 border-slate-600"
 						value={stock}
-						onChange={(e) => setStock(+e.target.value)}
+						onChange={(e) => setStock(e.target.value)}
 					/>
 				</div>
 				<div className="flex space-x-6 items-center">
@@ -65,7 +65,7 @@ function ItemCreate() {
 				<button
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 					onClick={() => {
-						createItemCallback(name, description, price, nonveg, stock, id);
+						createItemCallback(name, description, +price, nonveg, +stock, id);
 					}}
 					type="submit"
 				>

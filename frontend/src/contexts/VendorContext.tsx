@@ -119,11 +119,25 @@ const VendorProvider = ({ children }) => {
 		}
 	};
 
+	const getVendorSales = async (id: string) => {
+		try {
+			console.log(id);
+			const res = await axios({
+				method: "get",
+				url: `http://localhost:8000/vendor/${id}/sales`,
+			});
+			console.log(res);
+		} catch (err) {
+			console.log("Error while querying for vendor:", err.message);
+		}
+	};
+
 	const getVendorByIdCallback = useCallback(getVendorById, []);
 	const getAllVendorsCallback = useCallback(getAllVendors, []);
 	const createVendorCallback = useCallback(createVendor, []);
 	const updateVendorCallback = useCallback(updateVendor, []);
 	const deleteVendorCallback = useCallback(deleteVendor, []);
+	const getVendorSalesCallback = useCallback(getVendorSales, []);
 
 	return (
 		<VendorContext.Provider
@@ -134,6 +148,7 @@ const VendorProvider = ({ children }) => {
 				createVendorCallback,
 				updateVendorCallback,
 				deleteVendorCallback,
+				getVendorSalesCallback,
 			}}
 		>
 			{children}

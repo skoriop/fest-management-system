@@ -33,6 +33,7 @@ import AddEvent from "./pages/AddEvent";
 import EventUpdate from "./pages/EventUpdate";
 import Events from "./pages/Events";
 import EventRegister from "./pages/EventRegister";
+import VendorSales from "./pages/VendorSales";
 
 function App() {
 	return (
@@ -81,6 +82,10 @@ function App() {
 											<Route
 												element={<VendorUpdate />}
 												path="/vendor/:id/update"
+											/>
+											<Route
+												element={<VendorSales />}
+												path="/vendor/:id/sales"
 											/>
 											//Users
 											<Route element={<Users />} path="/user" />
