@@ -75,7 +75,6 @@ def delete_user(user_id: int):
         db.connection.commit()
         return True
 
-
 def get_user_by_email(email_id: str):
     query = """
         SELECT id FROM users WHERE email = %(email)s
