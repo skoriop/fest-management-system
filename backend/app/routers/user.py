@@ -31,8 +31,6 @@ async def get(user_id: int):
 async def get_registrations(user_id: int):
     try:
         registrations = user_api.get_user_registrations(user_id)
-        if not registrations:
-            raise HTTPException(status_code=404, detail="User not found")
         return {"message": None, "data": registrations}
     except HTTPException as e:
         raise e
