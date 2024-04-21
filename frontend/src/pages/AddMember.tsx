@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function AddMember() {
 	const { id } = useParams();
 	const { addMemberCallback } = useMember();
-	const [userID, setUserID] = useState("");
+	const [userEmail, setUserEmail] = useState("");
 	// const [id, setID] = useState("");
 
 	return (
@@ -15,18 +15,18 @@ function AddMember() {
 			<div className="flex flex-col border-slate-200 border-2 px-12 py-10 space-y-4">
 				<h1 className="text-4xl text-center pb-2 font-bold">Add Member</h1>
 				<div className="flex justify-between space-x-4">
-					<div className="text-2xl">ID</div>
+					<div className="text-2xl">Email</div>
 					<input
 						type="text"
 						className="text-black text-center p-1 border-2 border-slate-600"
-						value={userID}
-						onChange={(e) => setUserID(e.target.value)}
+						value={userEmail}
+						onChange={(e) => setUserEmail(e.target.value)}
 					/>
 				</div>
 				<button
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 					onClick={() => {
-						addMemberCallback(id, userID);
+						addMemberCallback(id, userEmail);
 					}}
 					type="submit"
 				>
