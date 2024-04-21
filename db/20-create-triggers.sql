@@ -78,28 +78,26 @@ EXECUTE PROCEDURE event_last_updated();
 
 
 create function members_add_update()
-    returns trigger
-    language plpgsql as $$
+RETURNS TRIGGER AS $$
 BEGIN
-UPDATE clubs c
-SET members = members + 1
-WHERE c.id=NEW.club_id;
-RETURN NEW;
+    UPDATE clubs c
+    SET members = members + 1
+    WHERE c.id=NEW.club_id;
+    RETURN NEW;
 END;
-$$;
+$$ LANGUAGE PLPGSQL;
 
 CREATE TRIGGER club_members_remove_update
-    AFTER DELETE ON public.club_members
-    FOR EACH ROW
-    EXECUTE FUNCTION members_add_update();
+AFTER DELETE ON public.club_members
+FOR EACH ROW
+EXECUTE FUNCTION members_add_update();
 
 create function members_remove_update()
-    returns trigger
-    language plpgsql as $$
+RETURNS TRIGGER AS $$
 BEGIN
     UPDATE clubs c
     SET members = members - 1
     WHERE c.id=OLD.club_id;
     RETURN NEW;
 END;
-$$;
+$$ LANGUAGE PLPGSQL;
