@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION spent_order()
 RETURNS TRIGGER AS $$
 BEGIN
     UPDATE users u
-    SET spent = spent + (SELECT SUM(price * quantity) FROM items WHERE NEW.item_id=id)
+    SET spent = spent + (SELECT SUM(price * NEW.quantity) FROM items WHERE NEW.item_id=id)
     WHERE EXISTS (SELECT * FROM orders o WHERE o.id=NEW.order_id AND u.id=o.placed_by);
     
     RETURN NEW;
@@ -18,7 +18,10 @@ CREATE OR REPLACE FUNCTION spent_events()
 RETURNS TRIGGER AS $$
 BEGIN
     UPDATE users u
-    SET spent = spent + (SELECT fee FROM events WHERE NEW.event_id=id AND NEW.user_id=u.id);
+    SET spent = spent + (
+        SELECT COALESCE(SUM(fee), 0) FROM events e 
+        WHERE NEW.event_id=e.id AND NEW.user_id=u.id
+    );
     RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
@@ -31,9 +34,9 @@ EXECUTE PROCEDURE spent_events();
 CREATE OR REPLACE FUNCTION stock()
 RETURNS TRIGGER AS $$
 BEGIN
-    UPDATE items i
-    SET i.stock = i.stock - NEW.quantity
-    WHERE i.id=NEW.item_id;
+    UPDATE items 
+    SET stock = stock - NEW.quantity
+    WHERE id=NEW.item_id;
     RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
@@ -66,8 +69,39 @@ BEGIN
     WHERE e.id=NEW.event_id;
     RETURN NEW;
 END;
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE TRIGGER event_last_updated_update
 AFTER UPDATE ON registrations
 FOR EACH ROW
 EXECUTE PROCEDURE event_last_updated();
+
+create function members_add_update()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE clubs c
+    SET members = members + 1
+    WHERE c.id=NEW.club_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER club_members_add_update
+AFTER INSERT ON public.club_members
+FOR EACH ROW
+EXECUTE FUNCTION members_add_update();
+
+create function members_remove_update()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE clubs c
+    SET members = members - 1
+    WHERE c.id=OLD.club_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER club_members_remove_update
+AFTER DELETE ON public.club_members
+FOR EACH ROW
+EXECUTE FUNCTION members_remove_update();

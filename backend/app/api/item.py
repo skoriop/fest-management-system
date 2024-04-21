@@ -17,12 +17,12 @@ def create_item(item: Item):
 
 
 # Gets a item by their ID
-def get_item_by_id(vendor_id: int, item_id: int):
+def get_item_by_id(item_id: int):
     query = """
-        SELECT * FROM items WHERE id = %(item_id)s AND vendor_id = %(vendor_id)s
+        SELECT * FROM items WHERE id = %(item_id)s
     """
     with PgDatabase() as db:
-        db.cursor.execute(query, {"item_id": item_id, "vendor_id": vendor_id})
+        db.cursor.execute(query, {"item_id": item_id})
         item = db.cursor.fetchone()
         db.connection.commit()
         return item

@@ -62,8 +62,6 @@ async def get_all_vendors():
 async def get_vendor_sales(vendor_id: int):
     try:
         sales = vendor_api.get_vendor_sales(vendor_id)
-        if not sales:
-            raise HTTPException(status_code=404, detail="Vendor not found")
         return {"message": "Success", "data": sales}
     except HTTPException as e:
         raise e

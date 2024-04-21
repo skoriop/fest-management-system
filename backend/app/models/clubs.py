@@ -9,3 +9,4 @@ class Club(BaseModel):
     description: str
     members: int = 0
 
+

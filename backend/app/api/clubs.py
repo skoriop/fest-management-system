@@ -48,6 +48,16 @@ def get_club_revenue(club_id: int):
         return revenue
 
 
+def get_all_clubs():
+    query = """
+        SELECT * FROM clubs
+    """
+    with PgDatabase() as db:
+        db.cursor.execute(query)
+        clubs = db.cursor.fetchall()
+        return clubs
+
+
 # Delete a club by its id
 def delete_club_by_id(club_id: int):
     query = """
@@ -79,23 +89,58 @@ def get_club_events(club_id: int):
     query = """
         SELECT * FROM events WHERE organizer_id = %(club_id)s
     """
+    join_query = """
+        SELECT * FROM venues v
+        JOIN venue_events ve ON v.id = ve.venue_id
+        WHERE ve.event_id = %(event_id)s
+    """
     with PgDatabase() as db:
         db.cursor.execute(query, {"club_id": club_id})
         club_events = db.cursor.fetchall()
+        for event in club_events:
+            db.cursor.execute(join_query, {"event_id": event['id']})
+            event["venues"] = db.cursor.fetchall()
+        db.connection.commit()
         return club_events
 
 
-# Update a club's members by its id
-def update_club_members(club_id: int, user_id: int):
-    query = """
-        UPDATE club_members
-        SET user_id = %(user_id)s
-        WHERE club_id = %(club_id)s
+# Add a member to a club
+def add_club_member(club_id: int, email: str):
+    query1 = """
+        SELECT id FROM users  WHERE email = %(email_id)s"""
+    query2 = """
+        INSERT INTO club_members (club_id, user_id)
+        VALUES (%(club_id)s, %(user_id)s)
         RETURNING *
     """
     # TODO: Trigger to update member count in clubs table
     with PgDatabase() as db:
-        db.cursor.execute(query, {"user_id": user_id, "club_id": club_id})
+        db.cursor.execute(query1, {"email_id": email})
+        user_id = db.cursor.fetchone()
+        if not user_id:
+            return None
+        db.cursor.execute(query2, {"user_id": user_id["id"], "club_id": club_id})
+        club_record = db.cursor.fetchone()
+        db.connection.commit()
+        return club_record
+
+
+# Remove a member from the club
+def remove_club_member(club_id: int, email: str):
+    query1 = """
+        SELECT id FROM users  WHERE email = %(email_id)s"""
+    query2 = """
+        DELETE FROM club_members WHERE
+        club_id = %(club_id)s AND user_id = %(user_id)s
+        RETURNING *
+    """
+    # TODO: Trigger to update member count in clubs table
+    with PgDatabase() as db:
+        db.cursor.execute(query1, {"email_id": email})
+        user_id = db.cursor.fetchone()
+        if not user_id:
+            return None
+        db.cursor.execute(query2, {"user_id": user_id["id"], "club_id": club_id})
         club_record = db.cursor.fetchone()
         db.connection.commit()
         return club_record

@@ -15,10 +15,10 @@ async def create(vendor_id: int, item: Item):
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
 
 
-@router.get("/vendor/{vendor_id}/items/{item_id}")
-async def get(vendor_id: int, item_id: int):
+@router.get("/items/{item_id}")
+async def get(item_id: int):
     try:
-        item = item_api.get_item_by_id(vendor_id, item_id)
+        item = item_api.get_item_by_id(item_id)
         if not item:
             raise HTTPException(status_code=404, detail="Item not found")
         return {"message": None, "data": item}

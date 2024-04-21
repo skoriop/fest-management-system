@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
 import app.api.user as user_api
 from app.models.user import User
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
@@ -31,8 +31,6 @@ async def get(user_id: int):
 async def get_registrations(user_id: int):
     try:
         registrations = user_api.get_user_registrations(user_id)
-        if not registrations:
-            raise HTTPException(status_code=404, detail="User not found")
         return {"message": None, "data": registrations}
     except HTTPException as e:
         raise e
@@ -67,5 +65,15 @@ async def delete_user(user_id: int):
     try:
         user_api.delete_user(user_id)
         return {"message": "User deleted successfully", "data": None}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
+
+@router.get("/user/email/{email_id}")
+async def get_user_by_email(email_id: str):
+    try:
+        user_id = user_api.get_user_by_email(email_id)
+        if not user_id:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"message": None, "data": user_id}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: ${str(e)}")
