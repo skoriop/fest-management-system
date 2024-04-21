@@ -32,9 +32,17 @@ def get_user_registrations(user_id: int):
     query = """
         SELECT * FROM events JOIN registrations ON events.id = registrations.event_id WHERE registrations.user_id = %(user_id)s
     """
+    join_query = """
+        SELECT * FROM venues v
+        JOIN venue_events ve ON v.id = ve.venue_id
+        WHERE ve.event_id = %(event_id)s
+    """
     with PgDatabase() as db:
         db.cursor.execute(query, {"user_id": user_id})
         registrations = db.cursor.fetchall()
+        for event in registrations:
+            db.cursor.execute(join_query, {"event_id": event['id']})
+            event["venues"] = db.cursor.fetchall()
         db.connection.commit()
         return registrations
 

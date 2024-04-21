@@ -82,9 +82,18 @@ def get_all_events():
     query = """
         SELECT * FROM events
     """
+    join_query = """
+        SELECT * FROM venues v
+        JOIN venue_events ve ON v.id = ve.venue_id
+        WHERE ve.event_id = %(event_id)s
+    """
     with PgDatabase() as db:
         db.cursor.execute(query)
         events = db.cursor.fetchall()
+        for event in events:
+            db.cursor.execute(join_query, {"event_id": event['id']})
+            event["venues"] = db.cursor.fetchall()
+        db.connection.commit()
         return events
 
 
