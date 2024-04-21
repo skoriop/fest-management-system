@@ -48,6 +48,12 @@ function User() {
 				>
 					Orders
 				</Link>
+				<Link
+					to={`/user/${id}/registrations`}
+					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
+				>
+					Registrations
+				</Link>
 			</div>
 		</div>
 	);
