@@ -87,7 +87,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE TRIGGER club_members_add_update
-AFTER DELETE ON public.club_members
+AFTER INSERT ON public.club_members
 FOR EACH ROW
 EXECUTE FUNCTION members_add_update();
 
