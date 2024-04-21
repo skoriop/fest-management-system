@@ -22,7 +22,7 @@ async def get_venues():
 async def create_venue(venue: Venue):
     try:
         created_venue = venue_api.create_venue(venue)
-        return {"message": "Vendor created successfully", "data": created_venue}
+        return {"message": "Venue created successfully", "data": created_venue}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred ${str(e)}")
 
