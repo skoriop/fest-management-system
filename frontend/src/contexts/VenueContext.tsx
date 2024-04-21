@@ -69,10 +69,7 @@ const VenueProvider = ({ children }) => {
 				url: `http://localhost:8000/venues/${id}/schedule`,
 			});
 			if (res.statusText === "OK") {
-				dispatch({
-					type: "venue/get",
-					payload: res.data.data,
-				});
+				return res.data.data;
 			}
 		} catch (err) {
 			console.log("Error while querying for venue:", err.message);
