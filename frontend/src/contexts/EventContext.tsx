@@ -147,6 +147,22 @@ function EventProvider({ children }) {
 		}
 	};
 
+	const getAllRegistrations = async (id: number) => {
+		try {
+			const res = await axios({
+				method: "get",
+				url: `http://localhost:8000/user/${id}/registrations`,
+			});
+			if (res.statusText === "OK") {
+				if (res.data.data.length === 0) return [];
+				return res.data.data;
+			}
+			return [];
+		} catch (err) {
+			console.log("Error while querying for registrations", err.message);
+		}
+	};
+
 	const registerEvent = async (id: number, email: string) => {
 		try {
 			const res = await axios({
@@ -157,7 +173,7 @@ function EventProvider({ children }) {
 				},
 			});
 			if (res.statusText === "OK") {
-				navigate("/events");
+				navigate("/event");
 			}
 		} catch (err) {
 			console.log("Error while querying for event", err.message);
@@ -180,6 +196,7 @@ function EventProvider({ children }) {
 
 	const getAllEventsCallback = useCallback(getAllEvents, []);
 	const getEventByIdCallback = useCallback(getEventById, []);
+	const getAllRegistrationsCallback = useCallback(getAllRegistrations, []);
 	const registerEventCallback = useCallback(registerEvent, []);
 	const createEventCallback = useCallback(createEvent, []);
 	const updateEventCallback = useCallback(updateEvent, []);
@@ -190,6 +207,7 @@ function EventProvider({ children }) {
 				event,
 				getAllEventsCallback,
 				getEventByIdCallback,
+				getAllRegistrationsCallback,
 				registerEventCallback,
 				createEventCallback,
 				updateEventCallback,
