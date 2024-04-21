@@ -44,6 +44,12 @@ function UserRegistrations() {
 							<h3 className="text-center text-xl">
 								End Time: {new Date(registration.end_time).toLocaleString()}
 							</h3>
+							<div className="flex events-center space-x-4">
+								<h3 className="font-bold text-xl">Venues: </h3>
+								<h3 className="text-center text-xl">
+									{registration.venues.map((x) => x.name).join(", ")}
+								</h3>
+							</div>
 						</div>
 					);
 				})}

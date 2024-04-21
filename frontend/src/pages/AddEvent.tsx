@@ -12,6 +12,7 @@ function AddEvent() {
 	const [startTime, setStartTime] = useState(new Date());
 	const [endTime, setEndTime] = useState(new Date());
 	const [fee, setFee] = useState(0);
+	const [venues, setVenues] = useState("");
 
 	return (
 		<div className="bg-slate-950 text-white min-h-screen h-full flex flex-col justify-start items-center space-y-12">
@@ -59,13 +60,30 @@ function AddEvent() {
 						type="number"
 						className="text-black text-center p-1 border-2 border-slate-600"
 						value={fee}
-						onChange={(e) => setFee(e.target.value)}
+						onChange={(e) => setFee(parseInt(e.target.value))}
+					/>
+				</div>
+				<div className="flex justify-between space-x-4 pb-4">
+					<div className="text-2xl">Venues</div>
+					<input
+						type="text"
+						className="text-black text-center p-1 border-2 border-slate-600"
+						value={venues}
+						onChange={(e) => setVenues(e.target.value)}
 					/>
 				</div>
 				<button
 					className="font-bold py-3 px-6 text-2xl flex gap-2 items-centertext-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"
 					onClick={() => {
-						createEventCallback(name, description, startTime, endTime, fee, id);
+						createEventCallback(
+							name,
+							description,
+							startTime,
+							endTime,
+							fee,
+							id,
+							venues,
+						);
 					}}
 					type="submit"
 				>

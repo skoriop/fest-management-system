@@ -57,6 +57,12 @@ function ClubEvents() {
 								<h3 className="font-bold text-xl">Fee: </h3>
 								<h3 className="text-center text-xl">{event.fee}</h3>
 							</div>
+							<div className="flex events-center space-x-4">
+								<h3 className="font-bold text-xl">Venues: </h3>
+								<h3 className="text-center text-xl">
+									{event.venues.map((x) => x.name).join(", ")}
+								</h3>
+							</div>
 							<div className="flex">
 								<Link
 									to={`/club/${id}/events/${event.id}/update`}

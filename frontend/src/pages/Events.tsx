@@ -52,6 +52,12 @@ function Events() {
 								<h3 className="text-center text-xl">{event.fee}</h3>
 							</div>
 
+							<div className="flex events-center space-x-4">
+								<h3 className="font-bold text-xl">Venues: </h3>
+								<h3 className="text-center text-xl">
+									{event.venues.map((x) => x.name).join(", ")}
+								</h3>
+							</div>
 							<Link
 								to={`/event/${event.id}/register`}
 								className="font-bold py-3 px-6 text-2xl flex gap-2 items-center text-slate-300 border-2 border-slate-400/30 border-opacity hover:bg-slate-800 hover:border-slate-800 w-fit mx-auto"

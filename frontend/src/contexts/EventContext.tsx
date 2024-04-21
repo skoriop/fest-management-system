@@ -95,6 +95,7 @@ function EventProvider({ children }) {
 		end_time: Date,
 		fee: number,
 		organizer_id: number,
+		venue_list: string,
 	) => {
 		try {
 			const res = await axios({
@@ -107,6 +108,7 @@ function EventProvider({ children }) {
 					end_time,
 					fee,
 					organizer_id,
+					venues: venue_list.split(",").map((x) => x.trim()),
 				},
 			});
 			if (res.statusText === "OK") {
